@@ -1,0 +1,1 @@
+say -f script.txt -o blueberry.aiff
