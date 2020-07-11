@@ -45,4 +45,4 @@ button("TEST", _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('
 ```
 
 
-<img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fulllscreen.png" alt="screenshot">
+<img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fullscreen.png" alt="screenshot">
