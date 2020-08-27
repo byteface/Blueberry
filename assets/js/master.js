@@ -102,7 +102,7 @@ $('.folder').draggable({ handle: '.icon', start: function(event, ui) { $(this).c
 
 // $(".finder").resizable();
 $('.content,.specific,.project,.share,.peruser').resizable({
-	handles: "n, e, s, w"
+	handles: "n, e, s, w, ne, se, sw, nw"
 });
 
 // $( "#droppable" ).droppable({});

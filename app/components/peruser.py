@@ -32,8 +32,10 @@ class Peruser(object):
         return ''.join([str(each) for each in folders])
 
     def create_folder(self, name: str ):
-        el=div(_class='folder',
-                _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}')"
+        el=div(_class='folder2',
+                # _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}')"
+                **{"_data-path":f"/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}"},
+                **{"_data-id":self.id}
             ).html(
             div(span('📁'), _style="font-size:70px;", _class='icon')
         )
@@ -54,8 +56,6 @@ class Peruser(object):
         uid = 'pad'+str(Math.round(Math.random()*10))
 
         el = str(div(_class="file-type-icon",
-            # _onclick=f"redraw('pad', '/file?file={self.dir.rstrip('/')}/{name}/&id=pad')"
-            
             _onclick=escape(f'add_to_page("/component?file={filename}&id={uid}")')
             ).html(
                 span(_class="corner"),
@@ -167,7 +167,7 @@ class Peruser(object):
         $('.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
         $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
         $('.peruser').resizable({
-        handles: "n, e, s, w"
+        handles: "n, e, s, w, ne, se, sw, nw"
         });
 
         $('.folder').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
@@ -176,6 +176,14 @@ class Peruser(object):
             e.preventDefault();
             $(this.hash).remove();
         });
+
+
+        $( '.folder2' ).dblclick(function() {
+            var path = $( this ).data('path');
+            var _id = $( this ).data('id');
+            redraw(_id, path)
+        });
+
 
         ''')
             )
