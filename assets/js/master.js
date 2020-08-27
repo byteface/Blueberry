@@ -90,7 +90,7 @@ $('.submit').click(function() {
 //	3.	Draggable Windows
 //-----------------------------------------------------------------------------------
 
-$('.content').remove();
+$('.content').remove();  //>?
 
 var a = 3;
 $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});

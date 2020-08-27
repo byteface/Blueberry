@@ -2,7 +2,7 @@ import base64
 
 from domonic.html import *
 from domonic.terminal import *
-
+from html import escape
 
 class Peruser(object):
     '''
@@ -31,7 +31,7 @@ class Peruser(object):
 
         return ''.join([str(each) for each in folders])
 
-    def create_folder(self, name: str ) -> str :
+    def create_folder(self, name: str ):
         el=div(_class='folder',
                 _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}')"
             ).html(
@@ -43,29 +43,31 @@ class Peruser(object):
 
         filepath = str(pwd()).strip('\n') + '/' + self.dir.rstrip('/') + '/' + name
 
-        # el = str(h2('📄', span(name), _style="font-size: 40px;",
-                # _onclick=f"redraw('pad', '/file?file={self.dir.rstrip('/')}/{name}/&id=pad')" ))
-
         # draw a file
         parts = name.split('.')
         docType = parts[1] if len(parts)>1 else ''
-        filetype = docType  # txt,doc,xls,pdf
+        filetype = docType  # txt,doc,xls,pdf - zip,rar,gif,psd,doc,exe,mp3,ai,ppt,svg,html,js,css,php,py,xml,json,mov,avi,fla,swf,csv,psd
         if docType == "html":
             filetype = ''
+        
+        filename=self.dir.rstrip('/')+'/'+name
+        uid = 'pad'+str(Math.round(Math.random()*10))
+
         el = str(div(_class="file-type-icon",
-            _onclick=f"redraw('pad', '/file?file={self.dir.rstrip('/')}/{name}/&id=pad')"
+            # _onclick=f"redraw('pad', '/file?file={self.dir.rstrip('/')}/{name}/&id=pad')"
+            
+            _onclick=escape(f'add_to_page("/component?file={filename}&id={uid}")')
             ).html(
                 span(_class="corner"),
                 span(filetype, _class=f"type {filetype}")
         )),
 
         try:
-            print('NAME:', name)
-            
+            # print('NAME:', name)            
             images=['jpg','jpeg','png','gif']
             for image in images:
                 if image in name:
-                    print('THIS ONES AN IMAGE') # TODO - only take a render if its smaller than X
+                    print('IMAGE detected!') # TODO - only take a render if its smaller than X
                     
                     # imgpath = "file:///" + str(pwd()).strip('\n') + '/' + self.dir.rstrip('/') + '/' + name
                     # el = img(_src=imgpath, _style="width:50px;height:50px;")
@@ -167,6 +169,8 @@ class Peruser(object):
         $('.peruser').resizable({
         handles: "n, e, s, w"
         });
+
+        $('.folder').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
 
         $(".destroy").click(function(e) {
             e.preventDefault();

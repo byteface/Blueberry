@@ -24,7 +24,7 @@ class Markdown(object):
                 div(_id=self.id).html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#", _class="destroy"),
+                            a("close", _href="#"+self.id, _class="destroy"),
                             a("minimize", _href="", _class="minimize"),
                             a("maximize", _href="#", _class="maximize")
                         ),

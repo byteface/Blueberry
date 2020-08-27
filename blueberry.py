@@ -28,8 +28,10 @@ async def component(request):
         # module = __import__(component)
         # reload(module)
         # return response.html( str( command_module(request.args) ) )
-    return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
-
+    try:
+        return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+    except Exception as e:
+        return response.html( str(Pad(request.args['file'][0], request.args['id'][0])) )
 
 @app.route('/')
 async def test(request):

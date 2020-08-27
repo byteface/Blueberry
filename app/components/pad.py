@@ -27,7 +27,7 @@ class Pad(object):
                 div(_id=self.id, _style="width:300px; heigh:400px;").html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#", _class="destroy"),  # TODO - reinit
+                            a("close", _href="#"+self.id, _class="destroy"),  # TODO - reinit
                             a("minimize", _href="deactivate", _class="minimize"),
                             a("maximize", _href="#", _class="maximize")
                         ),
@@ -38,8 +38,15 @@ class Pad(object):
                 ),            script('''
             $(".destroy").click(function(e) {
                 e.preventDefault();
-                $(this).remove();
+                $(this.hash).remove();
             });
+
+
+var a = 3;
+$('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
+$(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
+
+            
             ''')
             )
         )
