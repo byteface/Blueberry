@@ -2,6 +2,8 @@
   position: absolute !important;
   top:100px;
   left:100px;
+  min-width: 200px;
+  min-height: 200px;
 }
 
 #toolbar {
@@ -84,8 +86,12 @@
 }
 
 #view {
-  width: 650px;
-  height: 383px;
+  min-width: 200px;
+  min-height: 200px;
+  width: 100%;
+  height: 100%;
+  /* width: 650px; */
+  /* height: 383px; */
 }
 
 #sidebar {

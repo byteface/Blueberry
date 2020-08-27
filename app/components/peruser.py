@@ -163,14 +163,14 @@ class Peruser(object):
             w.document.write(image.outerHTML);
         });
 
-        var a = 3;
+        //var a = 3;
         $('.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
         $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
         $('.peruser').resizable({
         handles: "n, e, s, w, ne, se, sw, nw"
         });
 
-        $('.folder').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
+        $('.folder2').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
 
         $(".destroy").click(function(e) {
             e.preventDefault();

@@ -1,3 +1,6 @@
+var a = 3; // layers - GLOBAL ZINDEX tracker
+
+
 function goFullScreen(){
 	var elem = document.getElementById("body");
 	
@@ -92,7 +95,8 @@ $('.submit').click(function() {
 
 $('.content').remove();  //>?
 
-var a = 3;
+// var a = 3;
+
 $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
 $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
 // containment: 'window',
