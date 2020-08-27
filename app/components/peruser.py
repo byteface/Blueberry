@@ -37,7 +37,8 @@ class Peruser(object):
                 **{"_data-path":f"/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}"},
                 **{"_data-id":self.id}
             ).html(
-            div(span('📁'), _style="font-size:70px;", _class='icon')
+            div(span('📁'), _style="font-size:70px;", _class='icon'),
+            h5(name)
         )
         return el
 
@@ -50,16 +51,22 @@ class Peruser(object):
         docType = parts[1] if len(parts)>1 else ''
         filetype = docType  # txt,doc,xls,pdf - zip,rar,gif,psd,doc,exe,mp3,ai,ppt,svg,html,js,css,php,py,xml,json,mov,avi,fla,swf,csv,psd
         if docType == "html":
-            filetype = ''
+            filetype = '' # filetype only used to decorate icon
         
         filename=self.dir.rstrip('/')+'/'+name
-        uid = 'pad'+str(Math.round(Math.random()*10))
+        uid = 'pad'+str(Math.round(Math.random()*99999))
 
         el = str(div(_class="file-type-icon",
-            _onclick=escape(f'add_to_page("/component?file={filename}&id={uid}")')
+            # TODO - NOTE - this is what 'create_ref' should try to resolve and y a component lib would be useful.
+            # _onclick=escape(f'add_to_page("/component?file={filename}&id={uid}")')
+            **{"_data-path":f"/component?file={filename}&id={uid}"},
+            **{"_data-id":uid}
             ).html(
-                span(_class="corner"),
-                span(filetype, _class=f"type {filetype}")
+                div(_class="file-icon").html(
+                    span(_class="corner"),
+                    span(docType, _class=f"type {filetype}"),
+                    h5(filename)
+                )
         )),
 
         try:
@@ -170,13 +177,12 @@ class Peruser(object):
         handles: "n, e, s, w, ne, se, sw, nw"
         });
 
-        $('.folder2').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
+        $('.folder2, .file-type-icon').draggable({ handle: '.icon, .file-icon', start: function(event, ui) { $(this).css("z-index", a++); }});
 
         $(".destroy").click(function(e) {
             e.preventDefault();
             $(this.hash).remove();
         });
-
 
         $( '.folder2' ).dblclick(function() {
             var path = $( this ).data('path');
@@ -184,6 +190,11 @@ class Peruser(object):
             redraw(_id, path)
         });
 
+        $( '.file-type-icon' ).dblclick(function() {
+            var path = $( this ).data('path');
+            var _id = $( this ).data('id');
+            add_to_page(path)
+        });
 
         ''')
             )
