@@ -10,8 +10,8 @@
     text-align: left;
     position:absolute;
 	z-index:0;
-	visibility:hidden;
-	opacity:0;
+	/* visibility:hidden; */
+	/* opacity:0; */
 }
 .window.windows-vis {
 	visibility:visible;
@@ -78,6 +78,17 @@ nav.control-window a:after {
 	background: -moz-linear-gradient(white, rgba(255, 255, 255, .9) 2%, white, rgba(255, 255, 255, .4) 16%, rgba(255, 255, 255, 0) 43%, rgba(255, 255, 255, .74), rgba(255, 255, 255, .7) 122%, rgba(255, 255, 255, .7));
     box-shadow: inset 0px -3px -5px 3px rgba(255, 255, 255, 0.2), inset 0px 2px -5px 3px rgba(255, 255, 255, 0.2);
 }
+
+nav.control-window a.destroy {
+    background: #FD4E4E;
+}
+nav.control-window:hover a.destroy {
+	background: #FD4E4E url(../img/buttons-hover.png) 1px 1px no-repeat;
+}
+nav.control-window a.destroy:active {
+    background: #c72f2b url(../img/buttons-hover.png) 1px 1px no-repeat;
+}
+
 nav.control-window a.close {
     background: #FD4E4E;
 }

@@ -1,3 +1,36 @@
+function goFullScreen(){
+	var elem = document.getElementById("body");
+	
+	  if (elem.requestFullscreen) {
+		elem.requestFullscreen();
+	  } else if (elem.mozRequestFullScreen) { /* Firefox */
+		elem.mozRequestFullScreen();
+	  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+		elem.webkitRequestFullscreen();
+	  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+		elem.msRequestFullscreen();
+	  }
+}
+
+// pass an ElementID and an endpoint to redraw that div with the endpoints response
+window.redraw = function( _id, endpoint ){
+	$.get( endpoint, function( data ) {
+	// window.console.log(data)
+	  $( "#"+_id ).html( $(data).html() );
+	  // alert( "UPDATE was performed." );
+	});
+}
+
+// create a new component and render it to the page
+// add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
+window.add_to_page = function( endpoint ){
+	$.get( endpoint, function( data ) {
+		$('#page').append(data);
+	});
+}
+
+
+
 $(document).ready(function() {
 //-----------------------------------------------------------------------------------
 //	0.	Modernizr test
@@ -64,11 +97,26 @@ $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-ins
 $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
 // containment: 'window',
 
-
-
 $('.folder').draggable({ handle: '.icon', start: function(event, ui) { $(this).css("z-index", a++); }});
 
 
+// $(".finder").resizable();
+$('.content,.specific,.project,.share,.peruser').resizable({
+	handles: "n, e, s, w"
+});
+
+// $( "#droppable" ).droppable({});
+
+
+$( '.folder' ).dblclick(function() {
+	var path = $( this ).data('path');
+	add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
+});
+
+// TODO - double click text file
+// TODO - double click image
+// TODO - double click video file
+// TODO - double click mp3 file
 
 
 
@@ -93,6 +141,7 @@ var left = 50 + '%';
 var top = 15 + '%';
 var item = $('<div class="fresh"></div>').hide();
 var itemR = $('<div class="fresh"></div>').hide();
+
 
 $("a[data-rel=close]").click(function(e) {
     e.preventDefault();
@@ -131,4 +180,12 @@ $("#trash a[data-rel=close]").click(function(e) {
 });
 
 
+
+//-----------------------------------------------------------------------------------
+//	5.	Hide and Close
+//-----------------------------------------------------------------------------------
+
+
 }); 
+
+

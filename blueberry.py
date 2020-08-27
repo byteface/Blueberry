@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from sanic import Sanic
 from sanic import response
 from domonic.html import *
@@ -18,6 +16,20 @@ async def file(request):
 @app.route('/dir')
 async def dir(request):
     return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+
+
+# Component route
+# @app.route("/component/<component>")
+# def component(component):
+@app.route("/component")
+async def component(request):
+        # TODO - dynamic load components. think its something like this... i.e. pypal    
+        # from domonic.components import *
+        # module = __import__(component)
+        # reload(module)
+        # return response.html( str( command_module(request.args) ) )
+    return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+
 
 @app.route('/')
 async def test(request):

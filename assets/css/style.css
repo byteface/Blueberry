@@ -40,8 +40,10 @@ html, body {
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	user-select:none;
-	-webkit-animation:init 14s linear forwards;
-	-moz-animation:init 14s linear forwards;
+	/* -webkit-animation:init 14s linear forwards;
+	-moz-animation:init 14s linear forwards; */
+	-webkit-animation:init 1s linear forwards;
+	-moz-animation:init 1s linear forwards;
 }
 
 #pageLoading .blueberry-logo {
@@ -84,8 +86,10 @@ html, body {
 	z-index:0;
 	visibility:hidden;
 	opacity:1;
-	-webkit-animation:initLoginWindow 0.5s 12s linear forwards;
-	-moz-animation:initLoginWindow 0.5s 12s linear forwards;
+	/* -webkit-animation:initLoginWindow 0.5s 12s linear forwards;
+	-moz-animation:initLoginWindow 0.5s 12s linear forwards; */
+	-webkit-animation:initLoginWindow 0.5s 1s linear forwards;
+	-moz-animation:initLoginWindow 0.5s 1s linear forwards;
 }
 #headlogin {
 	background:transparent;
@@ -135,13 +139,17 @@ html, body {
 	margin-left:-60px;
 	margin-top:-60px;
 	background:url(../img/blueberry-logo-login.png) center no-repeat;
-	-webkit-animation:initAppleLoginWindow 0.5s 13.5s linear forwards;
-	-moz-animation:initAppleLoginWindow 0.5s 13.5s linear forwards;
+	/* -webkit-animation:initAppleLoginWindow 0.5s 13.5s linear forwards;
+	-moz-animation:initAppleLoginWindow 0.5s 13.5s linear forwards; */
+	-webkit-animation:initAppleLoginWindow 0.5s 1.5s linear forwards;
+	-moz-animation:initAppleLoginWindow 0.5s 1.5s linear forwards;
 }
 #pageLogin .user-avatar {
 	opacity:0;
-	-webkit-animation:initUserAvatar 0.3s 13.7s linear forwards;
-	-moz-animation:initUserAvatar 0.3s 13.7s linear forwards;
+	/* -webkit-animation:initUserAvatar 0.3s 13.7s linear forwards;
+	-moz-animation:initUserAvatar 0.3s 13.7s linear forwards; */
+	-webkit-animation:initUserAvatar 0.3s 1.7s linear forwards;
+	-moz-animation:initUserAvatar 0.3s 1.7s linear forwards;
 }
 #pageLogin #avatar {
 	position:absolute;
@@ -419,6 +427,7 @@ input[type=password]:focus ~ .tooltip-pass {
 	position:absolute;
 	z-index:-1;
 	font-family: "Trebuchet MS", "Helvetica", sans-serif;
+	overflow:hidden;
 }
 #page.vis {
 	visibility:visible;
@@ -816,3 +825,18 @@ a.button.blink:active, a.button.simple:active {
 #fail .fail-browser a:hover {
 	text-shadow:0 0px 5px rgba(153,153,153,0.95);
 }
+
+
+/*Not important...*/
+/* body{font-family:Helvetica,sans-serif; padding:30px; display:block; color:#333;} */
+/* h1{text-align:center;} */
+/* .file-type-icon{clear:both; margin:30px auto; width:32px;} */
+/*end of not important*/
+
+.file-type-icon{display:block; width:30px; height:40px; background:#F9F9F9; position:relative; border:1px solid #E6E6E6; border-radius:2px; box-shadow:inset 1px 1px 0 0 #ffffff, inset -1px -1px 0 0 #ffffff, inset 0 10px 20px -10px rgba(0,0,0,.05);}
+.file-type-icon .corner{display:block; position:absolute; top:-1px; right:-1px; width: 0; height: 0; border-left: 12px solid #eeeeee; border-top: 12px solid #ffffff; /*change this color if you want to use it on custom background*/ box-shadow:-1px 1px 0px 0 #E6E6E6;}
+.file-type-icon .type{background:#777; text-align:center; display:block; position:absolute; bottom:6px; left:-2px; height:15px; line-height:15px; font-size:10px; color:#fff; border-radius:1px; width:25px;}
+.file-type-icon .type.txt{background:#F9B142;}
+.file-type-icon .type.doc{background:#0088CC;}
+.file-type-icon .type.xls{background:#85A91A;}
+.file-type-icon .type.pdf{background:#C80000;}

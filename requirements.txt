@@ -1,2 +1,2 @@
-domonic==0.1.1
+domonic==0.1.6
 sanic==20.6.3

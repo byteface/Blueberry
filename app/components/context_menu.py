@@ -76,14 +76,15 @@ class ContextMenu(object):
 
         div(_class="menu").html(
             ul(_class="menu-options").html(
-                li("Copy", _class="menu-option"),
-                li("Reload", _class="menu-option"),
-                li("Save", _class="menu-option"),
-                li("Save As", _class="menu-option"),
-                li("Inspect", _class="menu-option")
+                li("New Folder", _class="menu-option"),
+                li("Get Info", _class="menu-option"),
+                li("Change Desktop Background", _class="menu-option")
             )
-
         ),
+
+
+
+
 
         script('''
 
