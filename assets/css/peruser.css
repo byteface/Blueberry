@@ -1,4 +1,4 @@
-.peruser {
+.peruser, .window {
   position: absolute !important;
   top:100px;
   left:100px;

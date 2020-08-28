@@ -1,6 +1,25 @@
 from domonic.html import *
 from domonic.terminal import whoami
 
+
+class Nav_Menu(object):
+    def __init__(self, request, *args, **kwargs):
+        self.id = "menu"
+        self.menu = nav_menu
+        
+        print(request.args['nav'])
+
+        try:
+            if request.args['nav'][0] == 'pad':
+                from app.components.pad import pad_nav_menu
+                self.menu = pad_nav_menu
+        except Exception as e:
+            print(e)
+
+    def __str__(self):
+        return str(self.menu)
+
+
 username = whoami()
 
 nav_menu = header(_id="head").html(
@@ -165,7 +184,8 @@ nav_menu = header(_id="head").html(
                     li("Toolbar", _class="disable"),
                     li("Customize Toolbar...", _class="disable"),
                     li(_class="divider"),
-                    li("Show View Options...")
+                    li("Show View Options..."),
+                    li("Go Fullscreen")
                 ),    
             ),
             li(

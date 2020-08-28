@@ -67,9 +67,9 @@ class Dock(object):
                     ),
                     li(_id="preferences").html(
                         a(_href="#warning", **{"_data-rel": "showOp"}).html(
-                            em(span("System Preferences")),
+                            em(span("Configuration")),
                             img(_src="assets/img/preferences.png",
-                                _alt="System Preferences")
+                                _alt="preferences")
                         )
                     ),
                     li(_id="trash").html(

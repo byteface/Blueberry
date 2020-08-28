@@ -180,9 +180,9 @@ bd = body( sfx, fail,
                 div(_class="container-alert").html(
                     img(_src="assets/img/FinderIcon.png", _width="48px", _height="48px", _alt="alert"),
                     div(_class="about-alert").html(
-                        h2("Secure Empty Trash permanently erases the items in the Trash. Are you sure you want to permanently erase them?"),
-                        p("If you choose Secure Empty Trash, you can't recover the items unless you've backed them up using Time Machine or another backup program."),
-                        a("Secure Empty Trash", _href="#warning", _class="button blink", **{"_data-rel":""}),
+                        h2("Trash"),
+                        h2("Warning: Items moved to trash are PERMANENTLY ERASED FOREVER!"),
+                        a("Do it!", _href="#warning", _class="button blink", **{"_data-rel":""}),
                         a("Cancel", _href="#trash", _class="button simple", **{"_data-rel":"close"})
                     )
                 )

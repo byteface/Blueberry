@@ -28,7 +28,14 @@ window.redraw = function( _id, endpoint ){
 // add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
 window.add_to_page = function( endpoint ){
 	$.get( endpoint, function( data ) {
-		$('#page').append(data);
+			$('#page').append(data);
+	});
+}
+
+// call this to get a new menu when app is in focus
+window.redraw_menu = function( app ){
+	$.get( '/component/nav_menu?nav='+app, function( data ) {
+			$('#head').html($(data).html());
 	});
 }
 

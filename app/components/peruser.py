@@ -146,8 +146,7 @@ class Peruser(object):
                             # li(span("Bookmarks", _class='group'))
                         )
                     ),
-                    div(_id='content').html( 
-                        
+                    div(_id='content').html(
                         self.create_folders()
                      )  # <----------------
                 ),
@@ -178,6 +177,11 @@ class Peruser(object):
         });
 
         $('.folder2, .file-type-icon').draggable({ handle: '.icon, .file-icon', start: function(event, ui) { $(this).css("z-index", a++); }});
+
+        $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
+            redraw_menu('peruser')
+        } );
+
 
         $(".destroy").click(function(e) {
             e.preventDefault();

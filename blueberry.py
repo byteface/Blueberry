@@ -3,6 +3,7 @@ from sanic import response
 from domonic.html import *
 from domonic.terminal import ls
 from app import *
+from app.components import *
 
 app = Sanic(name='Blueberry OS')
 app.static('/assets', './assets')
@@ -31,7 +32,27 @@ async def component(request):
     try:
         return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
     except Exception as e:
+        print(e)
         return response.html( str(Pad(request.args['file'][0], request.args['id'][0])) )
+
+
+# Component route
+@app.route("/component/<component>")
+async def component2(request, component):
+
+# try:
+    # import importlib
+    # module = importlib.import_module(f'app.components.{component}')
+    # my_class = getattr(module, component.title())
+    # my_instance = my_class()
+    module = __import__(f'app.components.{component}')
+    my_class = getattr(module, component.title())
+    # reload(module)
+    return response.html( str( my_class(request) ) )
+# except Exception as e:
+    # return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+    # print(e)
+    # return response.html( "FAIL" )
 
 @app.route('/')
 async def test(request):
