@@ -1,7 +1,7 @@
 from domonic.html import *
-from domonic.terminal import pwd, ls, cat
+from domonic.terminal import pwd, ls, cat, whoami
 from domonic.javascript import Global
-
+from html import escape
 
 class Pad(object):
 
@@ -13,9 +13,14 @@ class Pad(object):
             self.id = _id
 
     def get_file_content(self):
-        if len(self.file) < 1:
-            return ""
-        return str(cat(self.file.rstrip('/')))
+        try:
+            if len(self.file) < 1:
+                return ""
+            return str(cat(self.file.rstrip('/')))
+        except Exception as e:
+            print(e)
+        return ""  # new files
+
 
     # def set_menu(): # TODO - update the menu
     # def save_file(self):
@@ -40,6 +45,7 @@ class Pad(object):
                 $(".destroy").click(function(e) {
                     e.preventDefault();
                     $(this.hash).remove();
+                    redraw_menu('peruser')
                 });
                 //var a = 3;
                 $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
@@ -48,7 +54,7 @@ class Pad(object):
                 $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
                     redraw_menu('pad')
                 } );
-
+                
             ''')
             )
         )
@@ -127,8 +133,9 @@ pad_nav_menu = header(_id="head").html(
             li(
                 a("File", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
-                    li("New"),
+                    # li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
+                    li(span("New",
+                        _onclick=escape(f"add_to_page('/component?file=newfile&id=pad_new')"))),  # todo randID and key from config
                     li("Open"),
                     li("Open Recent",
                         span(_class="arrow"),
@@ -260,7 +267,7 @@ pad_nav_menu = header(_id="head").html(
                     li("Zoom In"),
                     li("Zoom Out"),
                     li(_class="divider"),
-                    li("Go Fullscreen")
+                    li("Go Fullscreen", _onclick="goFullScreen();")
                 ),    
             ),
             li(
@@ -282,6 +289,21 @@ pad_nav_menu = header(_id="head").html(
                     li("Pad Help"),
                 )
             )
+        )
+    ),
+    nav(_id="menu-dx").html(
+        ul(
+            li('📶'),
+            li(_class="time").html(
+                ul(
+                    li(_id="DateAbbr"),
+                    li(_class="hour"),
+                    li(":", _class="point"),
+                    li(_class="mins")
+                )
+            ),
+            li(a( whoami(), _href="#all"), _class="username"),
+            li("🔎")
         )
     )
 )

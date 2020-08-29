@@ -18,9 +18,11 @@ class Dock(object):
                         )
                     ),
                     li(_id="launchPad").html(
-                        a(_href="#warning", **{"_data-rel": "showOp"}).html(
-                            em(span("Launchpad")),
-                            img(_src="assets/img/launchPad.png", _alt="Launchpad")
+                        # a(_href="#warning", **{"_data-rel": "showOp"}).html(
+                            div(_onclick="add_to_page('/component/launcher?&id=launcher')").html(
+                                em(span("Apps")),
+                                img(_src="assets/img/launchPad.png", _alt="Launchpad")
+                            # )
                         )
                     ),
                     li(_id="expose").html(
@@ -66,7 +68,9 @@ class Dock(object):
                         )
                     ),
                     li(_id="preferences").html(
-                        a(_href="#warning", **{"_data-rel": "showOp"}).html(
+                        # a(_href="", **{"_data-rel": "showOp"},
+                        div(_onclick="add_to_page('/component?file=config.ini&id=config_pad')"
+                        ).html(
                             em(span("Configuration")),
                             img(_src="assets/img/preferences.png",
                                 _alt="preferences")

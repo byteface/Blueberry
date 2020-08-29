@@ -45,6 +45,7 @@ class Markdown(object):
                 $(".destroy").click(function(e) {
                     e.preventDefault();
                     $(this.hash).remove();
+                    redraw_menu('peruser')
                 });
                 '''
                 )
@@ -193,7 +194,7 @@ md_nav_menu = nav(_id="menu").html(
                     li("Zoom In"),
                     li("Zoom Out"),
                     li(_class="divider"),
-                    li("Go Fullscreen")
+                    li("Go Fullscreen", _onclick="goFullScreen();")
                 ),    
             ),
             

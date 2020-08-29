@@ -16,8 +16,10 @@ class Desktop(object):
         return str(folders)
 
     def create_folder(self, name: str ) -> str :
+        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' 
         return str(
-                div(_class='folder', **{"_data-path":self.dir+"/"+name}).html(
+                div(_class='folder', _style=s,
+                    **{"_data-path":self.dir+"/"+name}).html(
                     div(span('📁'), _style="font-size:70px;", _class='icon'),
                     span(name, _style="color: white;")
                 )

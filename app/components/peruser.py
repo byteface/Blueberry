@@ -2,37 +2,47 @@ import base64
 
 from domonic.html import *
 from domonic.terminal import *
+from domonic.javascript import *
 from html import escape
+
 
 class Peruser(object):
     '''
     a file browser
     '''
 
-    PROJECT_ROOT = lambda _id : f"redraw('{_id}', '/dir?directory='../'&id={_id}')"
+    PROJECT_ROOT = lambda _id : f"redraw('{_id}', '/dir?directory=.&id={_id}')"
 
     def __init__(self, mydir='.', _id :str=None):
         if "&&" in mydir: mydir='.'
 
         self.dir=mydir
+
         if _id is None:
             self.id = "peruser" + str(hash(self.dir))
         else:
             self.id = _id
 
-    def create_folders(self) -> str :
+    def create_contents(self) -> str :
         folders=[]
-        for line in ls(f'-alp {self.dir}'):
-            # if line == '.' or line == '../'): continue  # dont draw mac hidden dirs
-            if '/' in line:
-                folders.append(self.create_folder(line.split(' ')[-1]))
+        for c, line in enumerate(ls(f'-alp {self.dir}')):
+            if c == 0: continue
+            name = line.split(' ')[-1]
+            if name == './' or name == '../': continue  # dont draw mac hidden dirs
+            if '/' in name:
+                folders.append(self.create_folder(name))
             else:
-                folders.append(self.create_file(line.split(' ')[-1]))
+                folders.append(self.create_file(name))
+        
+        # print([str(each) for each in folders])
 
+        # return ''.join([str(each) for each in folders])
         return ''.join([str(each) for each in folders])
 
     def create_folder(self, name: str ):
-        el=div(_class='folder2',
+        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+
+        el=div(_class='folder2', _style=s,
                 # _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}')"
                 **{"_data-path":f"/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}"},
                 **{"_data-id":self.id}
@@ -53,21 +63,27 @@ class Peruser(object):
         if docType == "html":
             filetype = '' # filetype only used to decorate icon
         
-        filename=self.dir.rstrip('/')+'/'+name
+        filepath=self.dir.rstrip('/')+'/'+name
         uid = 'pad'+str(Math.round(Math.random()*99999))
 
-        el = str(div(_class="file-type-icon",
+        
+        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+
+        el = str(div(_class="file-type-icon", _style=s,
             # TODO - NOTE - this is what 'create_ref' should try to resolve and y a component lib would be useful.
-            # _onclick=escape(f'add_to_page("/component?file={filename}&id={uid}")')
-            **{"_data-path":f"/component?file={filename}&id={uid}"},
+            # _onclick=escape(f'add_to_page("/component?file={filepath}&id={uid}")')
+            **{"_data-path":f"/component?file={filepath}&id={uid}"},
             **{"_data-id":uid}
             ).html(
                 div(_class="file-icon").html(
-                    span(_class="corner"),
-                    span(docType, _class=f"type {filetype}"),
-                    h5(filename)
+                    div(
+                    span('📄', _style="position:absolute;font-size:60px;"),
+                    # span(_class="corner"),
+                    span(docType, _class=f"type {filetype}")
+                    ),
+                    h5(name, _style="top:50px;position:absolute;")
                 )
-        )),
+        ))
 
         try:
             # print('NAME:', name)            
@@ -91,6 +107,7 @@ class Peruser(object):
         except Exception as e:
             print('create file FAILED:', e)
 
+        print(el)
         return el
 
 
@@ -115,7 +132,7 @@ class Peruser(object):
     def __str__(self):
         return str(
             div(_id=self.id, _class="window peruser").html(
-                div(_class="test").html(
+                # div(_class="test", _style="height:0px;").html(
                     div(_id='toolbar').html(
                         nav(_class="control-window").html(
                             a("close", _href="#"+self.id, _class="destroy", **{"_data-rel":"destroy"}),
@@ -125,21 +142,19 @@ class Peruser(object):
                         h1(f"{self.dir}", _class="titleInside", _id='windowname'),
                         div(_id='actions').html(
                             div(
-                                button(span('🔙', _style="font-size:18px;"),
+                                button(span('../', _style="font-size:18px;"),
                                     _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/../&id={self.id}')"),
                                 " ",
-                                button(span('👉', 
-                                    _style="font-size:18px;"))
+                                # button(span('👉', _style="font-size:18px;"))
                             )
                             # button("find", _id="find")
                         )
-                    )
+                    # )
                 ),
-
                 div(_id='view').html(
                     div(_id='sidebar').html(
                         ul(
-                            li(button("TEST", _onclick=Peruser.PROJECT_ROOT(self.id))),
+                            li(span("🏠 HOME", _onclick=Peruser.PROJECT_ROOT(self.id))),
                             li(span("Files", _class='group'),
                                 ul( self.create_list_view() )  # <----------------
                             ),
@@ -147,7 +162,7 @@ class Peruser(object):
                         )
                     ),
                     div(_id='content').html(
-                        self.create_folders()
+                        self.create_contents()
                      )  # <----------------
                 ),
         script('''

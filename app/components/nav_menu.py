@@ -1,6 +1,6 @@
 from domonic.html import *
 from domonic.terminal import whoami
-
+from html import escape
 
 class Nav_Menu(object):
     def __init__(self, request, *args, **kwargs):
@@ -60,13 +60,13 @@ nav_menu = header(_id="head").html(
                         )
                     ),
                     li(_class="divider"),
-                    li("Force Quit..."),
+                    li("Force Quit...", _onclick=""),
                     li(_class="divider"),
                     li("Sleep"),
                     li("Restart..."),
                     li("Shut Down..."),
                     li(_class="divider"),
-                    li("Log Out...")
+                    li("Log Out...", _onclick="window.location=''")
                 )
             ),
             li(_class="here").html(
@@ -94,7 +94,9 @@ nav_menu = header(_id="head").html(
             li(
                 a("File", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
+                    # li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
+                    li(span("New Peruser Window", 
+                        _onclick=escape(f"add_to_page('/component?directory=portfolio&id=peruser_new')"))),  # todo randID and key from config
                     li("New Folder"),
                     li("New Folder with Selection", _class="disable"),
                     li("New Smart Folder"),
@@ -185,7 +187,7 @@ nav_menu = header(_id="head").html(
                     li("Customize Toolbar...", _class="disable"),
                     li(_class="divider"),
                     li("Show View Options..."),
-                    li("Go Fullscreen")
+                    li("Go Fullscreen", _onclick="goFullScreen();")
                 ),    
             ),
             li(
@@ -247,7 +249,8 @@ nav_menu = header(_id="head").html(
                     li(_class="mins")
                 )
             ),
-            li(a( username, _href="#all"), _class="username")
+            li(a( username, _href="#all"), _class="username"),
+            li("🔎")
         )
     )
 )

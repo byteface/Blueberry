@@ -12,6 +12,8 @@ from .components.head import *
 from .components.desktop import *
 from .components.peruser import *
 from .components.nav_menu import *
+from .components.upload import *
+from .components.launcher import *
 
 # <!-- SFX -->
 sfx = div(audio(_id="myAudio", _autoplay="true").html(
@@ -81,7 +83,7 @@ bd = body( sfx, fail,
                     div(_class="validate").html(
                         form(_action="#page").html(
                             input(_type="password", _id="password", _placeholder="Password"),
-                            input(_type="submit", _class="submit"),
+                            input(_value="►", _type="submit", _class="submit"),
                             div(_class="tooltip-pass").html(
                                 p("Password: admin")
                             )
@@ -192,9 +194,10 @@ bd = body( sfx, fail,
         Desktop('portfolio'),
         # peruser,
         # peruser2,
+        Upload(),
         Markdown('README.md'),
         Pad('portfolio/README.md'),
-        context_menu,
+        # context_menu,
         br(),br(),
         
         dock
