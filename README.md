@@ -79,9 +79,9 @@ Then called update on itself somethign like this...
 button("TEST", _onclick=f"redraw('{self.id}', '/dir?directory={self.dir}/{name}&id={self.id}')")
 ```
 
-
 A couple of global utils in .JS to redraw elements...
 
+```
 // create a new component and render it to the page
 // add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
 window.add_to_page = function( endpoint ){
@@ -96,6 +96,6 @@ window.redraw_menu = function( app ){
 			$('#head').html($(data).html());
 	});
 }
-
+```
 
 <img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fullscreen.png" alt="screenshot">
