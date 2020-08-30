@@ -7,6 +7,13 @@ class Launcher(object):
     '''
     Launch applications
      - TODO - only allow one instance of this
+
+    - TODO - loop open sockets see what apps are running and display/link to them
+    - something like this....
+    sudo lsof -i -n -P | grep TCP | grep "LISTEN" | grep -v "127" 
+    ... todo - test piping on domonic. dont think ive dont that yet.
+    lsof('-i -n -P')
+
     '''
     def __init__(self, request, *args, **kwargs):
         self.name = "launcher"

@@ -23,8 +23,8 @@ app.config['UPLOAD_DIR'] = config.get(profile,'UPLOAD_DIR', fallback='./Uploads'
 # app.config['WALLPAPER'] = config.get(profile,'WALLPAPER', fallback='')
 # dock --
 app.config['TWITTER'] = config.get(profile,'TWITTER', fallback='tim_cook')
-app.config['GITHUB'] = config.get(profile,'GITHUB', fallback='byteface')
-app.config['WEBSITE'] = config.get(profile,'WEBSITE', fallback='https://github.com/apple')
+app.config['GITHUB'] = config.get(profile,'GITHUB', fallback='https://github.com/apple')
+app.config['WEBSITE'] = config.get(profile,'WEBSITE', fallback='https://apple.com')
 # app.config['CV'] = config.get(profile,'CV', fallback="")
 app.config['LINKEDIN'] = config.get(profile,'LINKEDIN', fallback="https://www.linkedin.com/company/apple/")
 # app.config['SPOTIFY'] = config.get(profile,'SPOTIFY', fallback=0)
