@@ -4,10 +4,22 @@ from domonic.terminal import pwd, ls, cat
 
 class Dock(object):
 
-    def __init__(self):
+    def __init__(self, settings):
         self.id = "dock"
+        self.settings = settings
+
+    # def create_item(self, _id, link, label, alt, image):
+    #     li(_id="expose").html(
+    #         a(_href=settings['TWITTER'], _target="_blank").html(
+    #             em(span("Twitter")),
+    #             img(_src="assets/img/expose.png", _alt="Twitter")
+    #         )
+    #     ),
+
 
     def __str__(self):
+
+
         return str(
             div(_class="dock").html(
                 ul(
@@ -25,18 +37,24 @@ class Dock(object):
                             # )
                         )
                     ),
+
+
                     li(_id="expose").html(
-                        a(_href="https://twitter.com/byteface", _target="_blank").html(
+                        a(_href=self.settings['TWITTER'], _target="_blank").html(
                             em(span("Twitter")),
                             img(_src="assets/img/expose.png", _alt="Twitter")
                         )
-                    ),
+                    ) if self.settings['TWITTER'] else "",  # inline condition! cool!
+
+
                     li(_id="appStore").html(
-                        a(_href="https://github.com/byteface", _target="_blank").html(
+                        a(_href=self.settings['GITHUB'], _target="_blank").html(
                             em(span("Github")),
                             img(_src="assets/img/appstore.png", _alt="Github")
                         )
-                    ),
+                    ) if self.settings['GITHUB'] else "",  # inline ternary condition! cool!
+
+
                     li(_id="safari").html(
                         a(_href="#warning", **{"_data-rel": "showOp"}).html(
                             em(span("Safari")),
@@ -50,11 +68,12 @@ class Dock(object):
                         )
                     ),
                     li(_id="addressBook").html(
-                        a(_href="https://www.linkedin.com/in/byteface/", _target="_blank").html(
+                        a(_href=self.settings['LINKEDIN'], _target="_blank").html(
                             em(span("LinkedIn")),
                             img(_src="assets/img/address.png", _alt="LinkedIn")
                         )
-                    ),
+                    ) if self.settings['LINKEDIN'] else "",  # inline ternary condition! cool!
+
                     li(_id="preview").html(
                         a(_href="#termy", **{"_data-rel": "show"}).html(
                             em(span("Terminal")),
@@ -67,6 +86,7 @@ class Dock(object):
                             img(_src="assets/img/iTunes.png", _alt="iTunes")
                         )
                     ),
+
                     li(_id="preferences").html(
                         # a(_href="", **{"_data-rel": "showOp"},
                         div(_onclick="add_to_page('/component?file=config.ini&id=config_pad')"
@@ -85,5 +105,3 @@ class Dock(object):
                 )
             )
         )
-
-dock = Dock()

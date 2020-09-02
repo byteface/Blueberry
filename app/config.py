@@ -15,27 +15,10 @@ from .components.peruser import *
 from .components.nav_menu import *
 from .components.upload import *
 from .components.launcher import *
-# from .components.clipboard import *
+from .components.clipboard import *
 
-
-# to customise update the config.ini file
-config = configparser.ConfigParser()
-config.read('config.ini')
-profile = 'default'
-app_settings = {}
-app_settings['DESKTOP'] = config.get(profile,'DESKTOP', fallback=".")
-app_settings['IS_ROOT'] = config.get(profile,'IS_ROOT', fallback=True)
-app_settings['UPLOAD_DIR'] = config.get(profile,'UPLOAD_DIR', fallback='./Uploads')
-# app.config['WALLPAPER'] = config.get(profile,'WALLPAPER', fallback='')
-# dock --
-dock_settings = {}
-dock_settings['TWITTER'] = config.get(profile,'TWITTER', fallback="")
-dock_settings['GITHUB'] = config.get(profile,'GITHUB', fallback="")
-dock_settings['WEBSITE'] = config.get(profile,'WEBSITE', fallback="")
-dock_settings['CV'] = config.get(profile,'CV', fallback="")
-dock_settings['LINKEDIN'] = config.get(profile,'LINKEDIN', fallback="")
-dock_settings['SPOTIFY'] = config.get(profile,'SPOTIFY', fallback="")
-dock = Dock(dock_settings)
+# from sanic import request
+# app = request.app
 
 
 # <!-- SFX -->
@@ -214,7 +197,7 @@ bd = body( sfx, fail,
             )
         ),
 
-        Desktop(app_settings['DESKTOP']),
+        Desktop(app.config['Desktop']),
         Upload(),
         # Clipboard(),
         Markdown('README.md'),

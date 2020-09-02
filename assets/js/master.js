@@ -33,8 +33,11 @@ window.redraw = function( _id, endpoint ){
 // create a new component and render it to the page
 // add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
 window.add_to_page = function( endpoint ){
+
+	console.log('add_to_page:')
+	console.log(endpoint)
 	$.get( endpoint, function( data ) {
-			$('#page').append(data);
+		$('#page').append(data);
 	});
 }
 
@@ -126,8 +129,15 @@ $('.content,.specific,.project,.share,.peruser').resizable({
 
 
 $( '.folder' ).dblclick(function() {
+
+	console.log("HEY HEY ")
 	var path = $( this ).data('path');
-	add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
+	console.log(path)
+
+	add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*9990) );
+
+
+
 });
 
 // TODO - double click text file
