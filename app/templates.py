@@ -16,7 +16,7 @@ from .components.nav_menu import *
 from .components.upload import *
 from .components.launcher import *
 # from .components.clipboard import *
-
+from .components.player import *
 
 # to customise update the config.ini file
 config = configparser.ConfigParser()
@@ -217,6 +217,7 @@ bd = body( sfx, fail,
         Desktop(app_settings['DESKTOP']),
         Upload(),
         # Clipboard(),
+        Player(),
         Markdown('README.md'),
         Pad('portfolio/README.md'),
         # context_menu,
