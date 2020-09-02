@@ -1,9 +1,10 @@
 from domonic.html import *
+from domonic.javascript import Math
 
 class Player(object):
-    def __init__(self):
+    def __init__(self, request=None):
         self.name = "player"
-        self.id = 'player'
+        self.id = 'player'  # + str(Math.random()*9999)
 
     def __str__(self):
         return str(
@@ -20,16 +21,25 @@ class Player(object):
                         div(_id='content').html(
                             h2("media player test."),
                             br(),
+                            button("<< Prev", _id="prev_video"),
                             button("Next >>", _id="skip_video"),
                             br(),
-                            div(_id="video")
+                            div(_id="video"),
+                            h4("Download Video"),
+                            label("Choose a format:", _for="downloads"),
+                            select(_name="downloads", _id="downloads").html(
+                              option(".mp3", _value="mp3"),
+                              option("mov",_value="mov"),
+                              option("aiff",_value="aiff"),
+                              option("wav",_value="wav")
+                            ),
+                            button("Start Download", _id="dl_video"),
                         )
                     )
                 ),
                 script("""
 
-
-                let videos = [
+                const videos = [
                   "https://www.youtube.com/watch?v=jOD1qvsD9vs",
                   "https://www.youtube.com/watch?v=kR6yGA-F16c",
                   "https://www.youtube.com/watch?v=59q-8_N4hL4",
@@ -39,7 +49,6 @@ class Player(object):
                   "https://www.youtube.com/watch?v=Qp5Io_nMiLY"
                 ]
                 $('#skip_video').on('click', function(){
-                console.log('twat')
                   videos.unshift(videos.pop());
                   let vid = renderLink(videos[0]);
                   $('#video').html(vid);
@@ -49,8 +58,6 @@ class Player(object):
                 $('#video').html(vid);
 
                 function renderLink( link ){
-
-                  // window.console.log("--"+link+"--")
                   if( ( link === "" ) ||  ( link === null ) || ( link === undefined ) ){
                     return "";
                   }

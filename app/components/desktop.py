@@ -1,6 +1,6 @@
 from domonic.html import *
 from domonic.terminal import *
-
+from domonic.javascript import Math
 
 class Desktop(object):
 

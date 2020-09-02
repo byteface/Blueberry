@@ -7,9 +7,9 @@ class Upload(object):
     '''
     Visit your IP from target machine, zip and upload ;)
     '''
-    def __init__(self):
+    def __init__(self, request=None):
         self.name = "upload"
-        self.id = 'upload' + str(Math.random()*9999)
+        self.id = 'upload'  # + str(Math.random()*9999)
 
     def get_ip(self):
         import socket
@@ -27,11 +27,10 @@ class Upload(object):
     def __str__(self):
         return str(
             div(
-                div(_id=self.id, _style="width:300px; height:400px;").html(
+                div(_id=self.id, _style="width:400px; height:400px;").html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#"+self.id,
-                              _class="destroy"),  # TODO - reinit
+                            a("close", _href="#"+self.id, _class="destroy"),
                             a("minimize", _href="deactivate", _class="minimize"),
                             a("maximize", _href="#", _class="maximize")
                         ),

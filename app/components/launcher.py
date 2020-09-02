@@ -1,7 +1,8 @@
 from domonic.html import *
 from domonic.javascript import Math
+from domonic.javascript import Global
 from domonic.terminal import ifconfig
-
+from html import escape
 
 class Launcher(object):
     '''
@@ -20,14 +21,31 @@ class Launcher(object):
         self.id = 'launcher'
 
     def __str__(self):
+
+        b1 = button( "TEST LAUNCH PLAYER", _onclick="add_to_page('/component/player?id=player')" )
+        b1.style.position = "absolute"
+        b1.style.top = "100px"
+        b1.style.left = "100px"
+
+        b2 = button( "TEST LAUNCH UPLOADER", _onclick="add_to_page('/component/upload?id=upload')" )
+        b2.style.position = "absolute"
+        b2.style.top = "300px"
+        b2.style.left = "100px"
+
+        link1 = "/component/player?id=player"
+        link2 = "/component/upload?id=upload"
+
         return str(div(_id=self.id).html(
                 div(_class="launcher_overlay", _style="width:100%; height:100%; \
                     position:absolute; \
                     top:0; \
                     left:0; \
-                    background-color:black;").html(
-                        "CONTENT"
+                    background-color:white;").html(
+                        "CONTENT", b1, b2
             ),
+            br(),br(),br(),br(),br(),br(),br(),br(),
+            button( "TEST LAUNCH PLAYER", _onclick=escape(f"add_to_page({link1})") ),
+            button( "TEST LAUNCH UPLOADER", _onclick=escape(f"add_to_page({link2})") ),
             script('''
                 $("#'''+self.id+'''").css('z-index', a++);
 

@@ -1,8 +1,8 @@
-// if (location.hash) {
-// 	setTimeout(function() {
-// 		window.scrollTo(0, 0);
-// 	}, 1);
-// }
+if (location.hash) {
+	setTimeout(function() {
+		window.scrollTo(0, 0);
+	}, 1);
+}
 
 var a = 3; // layers - GLOBAL ZINDEX tracker
 
