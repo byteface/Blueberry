@@ -1,2 +1,3 @@
-domonic==0.1.6
+domonic==0.2.1
 sanic==20.6.3
+youtube-dl==2020.7.28
