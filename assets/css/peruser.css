@@ -1,10 +1,22 @@
-.peruser, .window {
+.peruser {
   position: absolute !important;
   top:100px;
   left:100px;
-  min-width: 400px;
-  min-height: 200px;
+  min-width: 300px;
+  min-height: 400px;
+  height:400px;
 }
+
+.window {
+  position: absolute !important;
+  top:100px;
+  left:100px;
+  min-width: 300px;
+  min-height: 400px;
+  height:400px;
+}
+
+
 
 #toolbar {
   position: relative;
@@ -107,6 +119,11 @@
   float: left;
   overflow:hidden;
 }
+
+#sidebar ul, #sidebar li {
+  padding: 5px;
+}
+
 
 .group {
   text-transform: uppercase;

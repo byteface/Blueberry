@@ -33,9 +33,8 @@ window.redraw = function( _id, endpoint ){
 // create a new component and render it to the page
 // add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*999) );
 window.add_to_page = function( endpoint ){
-
-	console.log('add_to_page:')
-	console.log(endpoint)
+	// console.log('add_to_page:')
+	// console.log(endpoint)
 	$.get( endpoint, function( data ) {
 		$('#page').append(data);
 	});
@@ -44,13 +43,14 @@ window.add_to_page = function( endpoint ){
 // call this to get a new menu when app is in focus
 window.redraw_menu = function( app ){
 	$.get( '/component/nav_menu?nav='+app, function( data ) {
-			$('#head').html($(data).html());
+		$('#head').html($(data).html());
 	});
 }
 
 
 
 $(document).ready(function() {
+
 //-----------------------------------------------------------------------------------
 //	0.	Modernizr test
 //-----------------------------------------------------------------------------------
@@ -129,15 +129,10 @@ $('.content,.specific,.project,.share,.peruser').resizable({
 
 
 $( '.folder' ).dblclick(function() {
-
-	console.log("HEY HEY ")
+	// console.log("HEY HEY ")
 	var path = $( this ).data('path');
-	console.log(path)
-
+	// console.log(path)
 	add_to_page('/component?directory='+path+'&id=folder'+Math.round(Math.random()*9990) );
-
-
-
 });
 
 // TODO - double click text file

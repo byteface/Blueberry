@@ -8,13 +8,27 @@
 	z-index: 9999;
 	width: 100%;
 	text-align: center;
+	/* background: rgba(250,250,250, 0.5); */
 }
+
+.dock-background{
+	position:absolute;
+	background:rgba(250,250,250, 0.5);
+	height:50px;
+	width:80%;
+	top:100%;
+	left:10%;
+	margin-top:-50px;
+}
+
+
 .dock ul {
 	position: relative;
 	display: inline-block;
 	padding: 0 5px;
 	margin: 0;
-	background:url(../img/dock-bg.png) repeat-x bottom;
+	/* background:url(../img/dock-bg.png) repeat-x bottom; */
+	/* background: rgba(250,250,250, 0.5); */
 }
 .dock ul:before, .dock ul:after {
 	content: "";
@@ -25,11 +39,13 @@
 }
 .dock ul:before {
 	left: -38px;
-	background: url(../img/dock-bg-left.png) no-repeat left bottom;
+	/* background: url(../img/dock-bg-left.png) no-repeat left bottom; */
+	/* background: rgba(22,22,22, 0.5); */
 }
 .dock ul:after {
 	right: -38px;
-	background: url(../img/dock-bg-right.png) no-repeat right bottom;
+	/* background: url(../img/dock-bg-right.png) no-repeat right bottom; */
+	/* background: rgba(22,22,22, 0.5); */
 }
 .dock li {
 	display: inline-block;

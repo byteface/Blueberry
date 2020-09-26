@@ -50,11 +50,19 @@ class Pad(object):
                 //var a = 3;
                 $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
                 $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
+                
+                $(".window").resizable({
+                    handles: "n, e, s, w, ne, se, sw, nw"
+                });
 
                 $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
                     redraw_menu('pad')
                 } );
-                
+
+                $(document).ready(function() {
+                    $("#'''+self.id+''' .window").css('z-index', a++);
+                });
+
             ''')
             )
         )

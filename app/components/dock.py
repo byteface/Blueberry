@@ -19,8 +19,9 @@ class Dock(object):
 
     def __str__(self):
 
-
         return str(
+            div(
+            span(_class="dock-background"),
             div(_class="dock").html(
                 ul(
                     li(_id="finder").html(
@@ -103,5 +104,6 @@ class Dock(object):
                         )
                     )
                 )
+            )
             )
         )

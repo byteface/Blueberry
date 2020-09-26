@@ -141,8 +141,8 @@ class Peruser(object):
                         ),
                         h1(f"{self.dir}", _class="titleInside", _id='windowname'),
                         div(_id='actions').html(
-                            div(
-                                button(span('../', _style="font-size:18px;"),
+                            div("&nbsp;&nbsp;",
+                                button(span('🆙 ../', _style="font-size:12px;"),
                                     _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/../&id={self.id}')"),
                                 " ",
                                 # button(span('👉', _style="font-size:18px;"))
@@ -196,6 +196,9 @@ class Peruser(object):
         $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
             redraw_menu('peruser')
         } );
+        $(document).ready(function() {
+            $("#'''+self.id+'''").css('z-index', a++);
+        });
 
 
         $(".destroy").click(function(e) {

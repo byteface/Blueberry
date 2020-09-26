@@ -4,6 +4,7 @@ import configparser
 # from domonic.javascript import Math
 from domonic.html import *
 from domonic.terminal import pwd, whoami
+from domonic.components import SpriteCSS
 
 from .components.context_menu import *
 from .components.pad import *
@@ -72,45 +73,6 @@ fail = div(_id="fail").html(
             p(strong("Sorry your browser don't support CSS3!")) 
         )
     )
-
-
-
-
-class SpriteCSS(object):
-    
-    STYLE = lambda _id, width, height, spritesheet, time, steps, loop, y_offset, bg_color : """
-        ."""+_id+""" {
-          background:"""+bg_color+""";
-          width:"""+str(width)+"""px;
-          height:"""+str(height)+"""px;
-          background: url('"""+spritesheet+"""') left center;
-          animation:"""+_id+""" """+str(time)+"""s steps("""+str(steps)+""") infinite;
-        }
-        /*
-        @keyframes """+_id+""" {
-            100% { background-position: -"""+str(steps*width)+"""px; }
-        }
-        */
-        @keyframes """+_id+""" {
-            from { background-position:0px -"""+str(y_offset)+"""px; }
-            to { background-position:-"""+str(steps*width)+"""px -"""+str(y_offset)+"""px; }
-        }
-    """
-    
-    def __init__(self, id, width, height, spritesheet, time, steps, loop=True, y_offset=0, bg_color="none"):
-        self.id = id
-        self.styles = SpriteCSS.STYLE(id, width, height, spritesheet, time, steps, loop, y_offset, bg_color)
-    
-    def __str__(self):
-        return str(
-            span(
-                style(self.styles),
-                div(_class=self.id)
-            )
-        )
-
-
-# animated_monster = SpriteCSS('monster', 190, 240, 'assets/spritesheets/monster.png', 0.8, 10)
 
 
 animated_monster = SpriteCSS('ken', 70, 80, 'assets/spritesheets/ken.png', 0.8, 4, True, 80)
