@@ -154,8 +154,8 @@ nav.control-window a.deactivate {
 	left:60%;
 	top:35%;
 	margin:0px 0 0 -154px;
-	background: -webkit-linear-gradient(rgba(233, 233, 233, 1.0), rgba(178, 178, 178, 1.0) 16px, #EDEDED, #EDEDED 16px);
-	background: -moz-linear-gradient(rgba(233, 233, 233, 1.0), rgba(178, 178, 178, 1.0) 16px, #EDEDED, #EDEDED 15px);
+	background: -webkit-linear-gradient(rgba(233, 233, 233, 1.0), rgba(178, 178, 178, 1.0) 16px, #222, #222 16px);
+	background: -moz-linear-gradient(rgba(233, 233, 233, 1.0), rgba(178, 178, 178, 1.0) 16px, #222, #222 15px);
 	border-radius:0;
 	box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 4px rgba(0,0,0,0.48), 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
