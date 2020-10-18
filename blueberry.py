@@ -12,7 +12,9 @@ from app.components import *
 
 app = Sanic(name='Blueberry OS')
 app.static('/assets', './assets')
+app.static('/static', './static')
 
+app.config.UPLOAD_DIR = "uploads"
 
 # returns a specific component to be re-rendered
 @app.route('/file')
@@ -38,7 +40,7 @@ async def component(request):
         return response.html( str(Pad(request.args['file'][0], request.args['id'][0])) )
 
 
-# Component - A 'component' takes a request as input and returns html
+# Component - takes a request as input and returns html
 @app.route("/component/<component>")
 async def component2(request, component):
     try:
@@ -52,14 +54,14 @@ async def component2(request, component):
 
 @app.route('/upload', methods=['POST'])
 async def upload(request):
-        if not os.path.exists(app.config.UPLOAD_DIR): os.makedirs(app.config.UPLOAD_DIR)
-        upload_file = request.files.get('file')
-        filename = upload_file.name
-        with open(app.config.UPLOAD_DIR+"/"+filename, "wb") as f:
-            # TODO - async with aiofiles.open(path, 'wb') as f: await f.write(body)
-            f.write(upload_file.body)
-            f.close()
-
+    if not os.path.exists(app.config.UPLOAD_DIR): os.makedirs(app.config.UPLOAD_DIR)
+    upload_file = request.files.get('file')
+    filename = upload_file.name
+    with open(app.config.UPLOAD_DIR+"/"+filename, "wb") as f:
+        # TODO - async with aiofiles.open(path, 'wb') as f: await f.write(body)
+        f.write(upload_file.body)
+        f.close()
+    return response.html( "done" )
 
 @app.route('/')
 async def test(request):

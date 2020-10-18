@@ -4,7 +4,7 @@
     <br>
     Blueberry π
     <br>
-    <sup><sub><sup>Browser based file browser with Domonic and Sanic</sup></sub></sup>
+    <sup><sub><sup>File browser built with Domonic and Sanic</sup></sub></sup>
     <br>
 </h1>
 
@@ -20,18 +20,17 @@
     python3 blueberry.py
 
 ##### customising
-
 edit the congi.ini
 
 comment out the things you don't want to appear in the Dock
+
+not all settings working yet
 
 #### nav
 - http://localhost:8000/component/nav_menu?nav=default
 - http://localhost:8000/component/nav_menu?nav=pad
 
 #### upgrade
-
-If you had it before completely delete it and reinstall. As the domonic lib changes a lot atm.
-
+If you've had Blueberry before just completely delete it and reinstall. The domonic lib changes a lot atm.
 
 <img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fullscreen.png" alt="screenshot">

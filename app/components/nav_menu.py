@@ -6,9 +6,7 @@ class Nav_Menu(object):
     def __init__(self, request, *args, **kwargs):
         self.id = "menu"
         self.menu = nav_menu
-        
-        print(request.args['nav'])
-
+        # print(request.args['nav'])
         try:
             if request.args['nav'][0] == 'pad':
                 from app.components.pad import pad_nav_menu
@@ -28,9 +26,9 @@ nav_menu = header(_id="head").html(
             li(#_class="apple").html(
                 a("🫐", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("About This Box", _href="#about-this-mac", **{"_data-rel":"show"})),
-                    li("Software Updates..."),
-                    li("App Store..."),
+                    li(a("About This Box", _href="#about", **{"_data-rel":"show"})),
+                    li(a("Software Updates...", _href="https://github.com/byteface/Blueberry")),
+                    li(a("App Store...", _href="https://github.com/byteface/Blueberry")),
                     li(_class="divider"),
                     li("System Preferences..."),
                     li("Dock",
@@ -72,7 +70,7 @@ nav_menu = header(_id="head").html(
             li(_class="here").html(
                 a("Peruser", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("About Peruser", _href="#finder", **{"_data-rel":"show"})),
+                    li(a("About Peruser", _href="#about_peruser", **{"_data-rel":"show"})),
                     li(_class="divider"),
                     li("Preferences..."),
                     li(_class="divider"),
@@ -96,11 +94,11 @@ nav_menu = header(_id="head").html(
                 ul(_class="sublist").html(
                     # li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
                     li(span("New Peruser Window", 
-                        _onclick=escape(f"add_to_page('/component?directory=portfolio&id=peruser_new')"))),  # todo randID and key from config
+                        _onclick=escape(f"add_to_page('/dir?directory=static/desktop&id=peruser_new')"))),  # todo randID and key from config
                     li("New Folder"),
                     li("New Folder with Selection", _class="disable"),
-                    li("New Smart Folder"),
-                    li("New Burn Folder"),
+                    # li("New Smart Folder"),
+                    # li("New Burn Folder"),
                     li("Open", _class="disable"),
                     li("Open With", span(_class="arrow"), _class="disable"),
                     li("Print", _class="disable"),
@@ -113,12 +111,12 @@ nav_menu = header(_id="head").html(
                     li("Duplicate", _class="disable"),
                     li("Make Alias", _class="disable"),
                     li("Quick Look", _class="disable"),
-                    li("Show Original", _class="disable"),
+                    # li("Show Original", _class="disable"),
                     li("Add to Sidebar", _class="disable"),
                     li(_class="divider"),
                     li("Move to Trash", _class="disable"),
-                    li("Eject", _class="disable"),
-                    li("Burn Desktop to Disc..."),
+                    # li("Eject", _class="disable"),
+                    # li("Burn Desktop to Disc..."),
                     li(_class="divider"),
                     li("Find"),
                     li(_class="divider"),
@@ -199,23 +197,19 @@ nav_menu = header(_id="head").html(
                     li(_class="divider"),
                     li("All My Files"),
                     li("Documents"),
-                    li("Desktop"),
-                    li("Downloads"),
+                    li("Desktop", _onclick=escape(f"add_to_page('/dir?directory=static/desktop&id=peruser_desktop')")),
+                    li("Uploads", _onclick=escape(f"add_to_page('/dir?directory=uploads&id=peruser_uploads')")),
                     li("Home"),
                     li("Computer"),
-                    li("AirDrop"),
-                    li("Network"),
+                    # li("AirDrop"),
+                    # li("Network"),
                     li("Applications"),
                     li("Utilities"),
                     li(_class="divider"),
                     li("Recent Folders",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
-                            li("2012-01-10"),
-                            li("Archieves"),
-                            li("buildFiles"),
-                            li("MyProjects"),
-                            li("XCode_iPhone"),
+                            li("2019"),
                             li(_class="divider"),
                             li("Clear Menu")
                         )

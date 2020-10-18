@@ -48,6 +48,21 @@ class Upload(object):
                             div(str(br()).join(str(ifconfig()).split('\n')))
                         )
                     )
-                )
+                ),
+                script('''
+                $(".destroy").click(function(e) {
+                    e.preventDefault();
+                    $(this.hash).remove();
+                    // redraw_menu('peruser')
+                });
+                $('.content,.specific,.project,.share').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
+                $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
+                $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
+                    redraw_menu('pad')
+                } );
+                $(document).ready(function() {
+                    $("#'''+self.id+''' .window").css('z-index', a++);
+                });
+                ''')
             )
         )

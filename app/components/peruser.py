@@ -12,9 +12,26 @@ class Peruser(object):
     '''
 
     PROJECT_ROOT = lambda _id : f"redraw('{_id}', '/dir?directory=.&id={_id}')"
+    
+    UPLOADS_DIR = lambda _id : f"redraw('{_id}', '/dir?directory=./uploads&id={_id}')"
 
-    def __init__(self, mydir='.', _id :str=None):
+    def __init__(self, mydir='.', _id :str=None, is_root=True):
         if "&&" in mydir: mydir='.'
+        if "|" in mydir: mydir='.'
+        if ">" in mydir: mydir='.'
+        try:
+            print( command.run( "pwd" ) )
+            from pathlib import Path
+            path = str(Path(mydir).expanduser().resolve())
+            resolved = path.split("Blueberry")[1]
+            if resolved is not None:
+                mydir = "." + resolved
+        except:
+            print('has gone higher than root if no Blueberry in pathname')
+            # TODO - IF NOT ROOT in config. don't allow to navigate higher 
+            # # blocker < no private server session atm. and dont want to parse config on every Peruser request
+            if is_root is not True:
+                mydir = "."
 
         self.dir=mydir
 
@@ -22,6 +39,9 @@ class Peruser(object):
             self.id = "peruser" + str(hash(self.dir))
         else:
             self.id = _id
+        
+        self.col = 0
+        self.row = 0
 
     def create_contents(self) -> str :
         folders=[]
@@ -33,6 +53,11 @@ class Peruser(object):
                 folders.append(self.create_folder(name))
             else:
                 folders.append(self.create_file(name))
+            
+            self.col += 1
+            if self.col > 4 :
+                self.col = 0
+                self.row += 1
         
         # print([str(each) for each in folders])
 
@@ -40,7 +65,13 @@ class Peruser(object):
         return ''.join([str(each) for each in folders])
 
     def create_folder(self, name: str ):
-        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+
+        # s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+        xpos = 40+(self.col*100)
+        ypos = 60+(self.row*100)
+
+        print(name, xpos, ypos, self.col, self.row)
+        s = f'left:{xpos}px;top:{ypos}px;'
 
         el=div(_class='folder2', _style=s,
                 # _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/{name.lstrip('/')}&id={self.id}')"
@@ -67,7 +98,13 @@ class Peruser(object):
         uid = 'pad'+str(Math.round(Math.random()*99999))
 
         
-        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+        # s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
+
+        xpos = 40+(self.col*100)
+        ypos = 60+(self.row*100)
+        s = f'left:{xpos}px;top:{ypos}px;'
+
+        print(name, xpos, ypos, self.col, self.row)
 
         el = str(div(_class="file-type-icon", _style=s,
             # TODO - NOTE - this is what 'create_ref' should try to resolve and y a component lib would be useful.
@@ -132,38 +169,38 @@ class Peruser(object):
     def __str__(self):
         return str(
             div(_id=self.id, _class="window peruser").html(
-                # div(_class="test", _style="height:0px;").html(
-                    div(_id='toolbar').html(
-                        nav(_class="control-window").html(
-                            a("close", _href="#"+self.id, _class="destroy", **{"_data-rel":"destroy"}),
-                            a("minimize", _href="#", _class="minimize"),
-                            a("maximize", _href="#", _class="maximize")
-                        ),
-                        h1(f"{self.dir}", _class="titleInside", _id='windowname'),
-                        div(_id='actions').html(
-                            div("&nbsp;&nbsp;",
-                                button(span('🆙 ../', _style="font-size:12px;"),
-                                    _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/../&id={self.id}')"),
-                                " ",
-                                # button(span('👉', _style="font-size:18px;"))
-                            )
-                            # button("find", _id="find")
-                        )
-                    # )
-                ),
                 div(_id='view').html(
                     div(_id='sidebar').html(
                         ul(
-                            li(span("🏠 HOME", _onclick=Peruser.PROJECT_ROOT(self.id))),
+                            li(span("🏠 Home", _onclick=Peruser.PROJECT_ROOT(self.id))),
+                            li(span("👆 Uploads", _onclick=Peruser.UPLOADS_DIR(self.id))), #TODO - get from config
                             li(span("Files", _class='group'),
                                 ul( self.create_list_view() )  # <----------------
                             ),
                             # li(span("Bookmarks", _class='group'))
                         )
                     ),
-                    div(_id='content').html(
+                    div(_id='wrapper').html(
+                    div(_id='content', _style="position:relative;").html(
                         self.create_contents()
-                     )  # <----------------
+                    )  # <----------------
+                    )
+                ),
+                div(_id='toolbar').html(
+                    nav(_class="control-window").html(
+                        a("close", _href="#"+self.id, _class="destroy", **{"_data-rel":"destroy"}),
+                        a("minimize", _href="#", _class="minimize"),
+                        a("maximize", _href="#", _class="maximize")
+                    ),
+                    h1(f"{self.dir}", _class="", _id='windowname'),
+                    div(_id='actions').html(
+                        div("&nbsp;&nbsp;",
+                            button(span('🆙 ../', _style="font-size:12px;"),
+                                _onclick=f"redraw('{self.id}', '/dir?directory={self.dir.rstrip('/')}/../&id={self.id}')"),
+                            " ",
+                            # button(span('👉', _style="font-size:18px;"))
+                        )
+                    )
                 ),
         script('''
 

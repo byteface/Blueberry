@@ -97,7 +97,6 @@ bd = body( sfx, fail,
         )
     ),
 
-
     # <!-- DESKTOP -->
     div(_id="page").html(
         header(_id="head").html(

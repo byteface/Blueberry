@@ -76,8 +76,8 @@ pad_nav_menu = header(_id="head").html(
                 a("🫐", _href="#all"),
                 ul(_class="sublist").html(
                     li(a("About This Box", _href="#about-this-mac", **{"_data-rel":"show"})),
-                    li("Software Updates..."),
-                    li("App Store..."),
+                    li(a("Software Updates...", _href="https://github.com/byteface/Blueberry")),
+                    li(a("App Store...", _href="https://github.com/byteface/Blueberry")),
                     li(_class="divider"),
                     li("System Preferences..."),
                     li("Dock",

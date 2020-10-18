@@ -8,7 +8,7 @@ var a = 3; // layers - GLOBAL ZINDEX tracker
 
 
 function goFullScreen(){
-	var elem = document.getElementById("body");
+	var elem = document.getElementById("page");
 	
 	  if (elem.requestFullscreen) {
 		elem.requestFullscreen();

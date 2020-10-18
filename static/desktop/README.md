@@ -1,16 +1,9 @@
-# Portfolio
-
-##### Intro
-Here you can see examples of my work.
+##### About
 
 Feel free to have a look around.
 
-Kind regards,
-
-
 ##### About
 built with [domonic](https://github.com/byteface/domonic/) and [sanic](https://sanic.readthedocs.io/en/latest/)
-
 
 
 ##### Mark down rendering test...
@@ -36,5 +29,4 @@ Underscores
 
 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
-
 

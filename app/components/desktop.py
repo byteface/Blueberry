@@ -6,17 +6,25 @@ class Desktop(object):
 
     def __init__(self, dir='.'):
         self.dir = dir
+        self.count = 0
 
     def create_folders(self) -> str :
         folders=[]
+        self.count = 0
         for line in ls(f'-alp {self.dir}'):
             if '.' in line: continue  # skip hidden files
             if '/' in line:
                 folders.append(self.create_folder(line.split(' ')[-1].strip('/')))
+                self.count += 1
+
         return str(folders)
 
     def create_folder(self, name: str ) -> str :
-        s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' 
+        # layout folders as columns
+        xpos = 40+(Math.round(self.count/4))*100
+        ypos = 60+(((self.count%3))*100)
+        s = f'left:{xpos}px;top:{ypos}px;'
+        # print(name, xpos, ypos)
         return str(
                 div(_class='folder', _style=s,
                     **{"_data-path":self.dir+"/"+name}).html(
