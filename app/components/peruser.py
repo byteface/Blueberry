@@ -2,6 +2,7 @@ import base64
 
 from domonic.html import *
 from domonic.terminal import *
+from domonic.cmd import dir
 from domonic.javascript import *
 from html import escape
 
@@ -44,24 +45,54 @@ class Peruser(object):
         self.row = 0
 
     def create_contents(self) -> str :
+    
         folders=[]
-        for c, line in enumerate(ls(f'-alp {self.dir}')):
-            if c == 0: continue
-            name = line.split(' ')[-1]
-            if name == './' or name == '../': continue  # dont draw mac hidden dirs
-            if '/' in name:
-                folders.append(self.create_folder(name))
-            else:
-                folders.append(self.create_file(name))
-            
-            self.col += 1
-            if self.col > 4 :
-                self.col = 0
-                self.row += 1
-        
-        # print([str(each) for each in folders])
 
-        # return ''.join([str(each) for each in folders])
+        if sys.platform == 'win32':
+            # self.dir = os.getcwd()
+
+            # for line in dir(self.dir):
+            #     # only if its a folder
+            #     if os.path.isdir(line):
+            #         folders.append(self.create_folder(line))
+            #     else:
+            #         folders.append(self.create_file(line))
+
+            #     self.col += 1
+            #     if self.col > 3:
+            #         self.col = 0
+            #         self.row += 1
+
+            # just do it with normal python
+            for line in os.listdir(self.dir):
+                if os.path.isdir(line):
+                    folders.append(self.create_folder(line))
+                else:
+                    folders.append(self.create_file(line))
+
+                self.col += 1
+                if self.col > 3:
+                    self.col = 0
+                    self.row += 1
+
+
+
+        else:
+
+            for c, line in enumerate(ls(f'-alp {self.dir}')):
+                if c == 0: continue
+                name = line.split(' ')[-1]
+                if name == './' or name == '../': continue  # dont draw mac hidden dirs
+                if '/' in name:
+                    folders.append(self.create_folder(name))
+                else:
+                    folders.append(self.create_file(name))    
+                self.col += 1
+                if self.col > 4 :
+                    self.col = 0
+                    self.row += 1
+        
+
         return ''.join([str(each) for each in folders])
 
     def create_folder(self, name: str ):
@@ -85,7 +116,9 @@ class Peruser(object):
 
     def create_file(self, name: str ):
 
-        filepath = str(pwd()).strip('\n') + '/' + self.dir.rstrip('/') + '/' + name
+        pwd = os.getcwd()
+
+        filepath = pwd.strip('\n') + '/' + self.dir.rstrip('/') + '/' + name
 
         # draw a file
         parts = name.split('.')
@@ -149,9 +182,17 @@ class Peruser(object):
 
 
     def create_list_view(self) -> str :
+
+
+
         files=[]
-        for line in ls(f'-alp {self.dir}'):
-            files.append(self.create_item(line.split(' ')[-1]))
+        # for line in ls(f'-alp {self.dir}'):
+        #     files.append(self.create_item(line.split(' ')[-1]))
+        # return str(''.join(files))
+        # rewrite this as pure python with ls
+        # TODO - this is a bit of a hack - we should be able to use the ls command to get the files
+        for line in os.listdir(self.dir):
+            files.append(self.create_item(line))
         return str(''.join(files))
 
     def create_item(self, name: str ) -> str :

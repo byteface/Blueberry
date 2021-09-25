@@ -12,12 +12,24 @@
 ##### built with domonic and sanic
 
 ##### setup
+
 	python3 -m venv venv
 	. venv/bin/activate
 	python3 -m pip install -r requirements.txt
 
+
+##### windows setup
+
+    originally was mac only... now runs on windows. with some features still to be fixed.
+
+	python3 -m venv venv
+	venv\Scripts\activate
+	python3 -m pip install -r requirements.txt
+
+
 ##### running
     python3 blueberry.py
+
 
 ##### customising
 edit the congi.ini
@@ -26,11 +38,20 @@ comment out the things you don't want to appear in the Dock
 
 not all settings working yet
 
+
 #### nav
 - http://localhost:8000/component/nav_menu?nav=default
 - http://localhost:8000/component/nav_menu?nav=pad
+
 
 #### upgrade
 If you've had Blueberry before just completely delete it and reinstall. The domonic lib changes a lot atm.
 
 <img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fullscreen.png" alt="screenshot">
+
+
+### live demo
+
+It's been sat on this droplet for about a year...
+
+http://206.189.123.215:8000/

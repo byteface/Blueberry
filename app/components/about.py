@@ -1,17 +1,37 @@
+import os
+import sys
+
 from domonic.html import *
 from domonic.javascript import Math
 from domonic.components import SpriteCSS
-from domonic.terminal import command
 
 from .core import Window
 
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 
 class About(Window):
 
     def __init__(self):
 
         anim = SpriteCSS('ken', 70, 80, 'assets/spritesheets/ken.png', 0.8, 4, True, 80)
+
+        # if windows do something
+        memory = None
+        if sys.platform == 'win32':
+            from domonic.cmd import Cmdcommand
+            memory = Cmdcommand.run('wmic OS get FreePhysicalMemory /Value')
+        else:
+            from domonic.terminal import command
+            memory = command.run("top -l 1 -s 0 | grep PhysMem")
+
+        disk = None
+        if sys.platform == 'win32':
+            from domonic.cmd import Cmdcommand
+            disk = Cmdcommand.run('wmic diskdrive get size')
+        else:
+            from domonic.terminal import command
+            disk = command.run("df -h")
+
         
         self.content = div(_class="container").html(
                 div(_class="container-inside").html(
@@ -22,8 +42,8 @@ class About(Window):
                         p(a("Software Update...", _class="button about", _href="#", _style="margin:10px;")),
                         ul(_class="hardware").html(
                             # li(strong("Processor"), ""),
-                            li(strong("Memory :"), command.run("top -l 1 -s 0 | grep PhysMem") ),
-                            li(strong("Disk :"), command.run("df -h $HOME"))
+                            li(strong("Memory :"), memory),
+                            li(strong("Disk :"), disk)
                         ),
                         p(a("More Info...", _class="button about", _href="#", _style="margin:10px;")),
                         br(),
@@ -59,7 +79,3 @@ class AboutPeruser(Window):
         # )
 
         Window.__init__(self, self.content, id="about_peruser", name="About Peruser")
-
-
-
-# ? inhertisition. wtf is this madness? copywrite moi for this shit
