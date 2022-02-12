@@ -1,3 +1,4 @@
-domonic==0.5.1
-sanic==21.6.2
-youtube-dl==2021.6.6
+domonic==0.9.1
+sanic==21.12.1
+youtube-dl==2021.12.17
+pip-upgrader==1.4.15

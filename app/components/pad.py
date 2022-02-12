@@ -3,9 +3,9 @@ from domonic.terminal import pwd, ls, cat, whoami
 from domonic.javascript import Global
 from html import escape
 
-class Pad(object):
 
-    def __init__(self, myfile='', _id: str = None, *args, **kwargs):
+class Pad(object):
+    def __init__(self, myfile="", _id: str = None, *args, **kwargs):
         self.file = myfile
         if _id is None:
             self.id = "pad" + str(hash(self.file))
@@ -16,11 +16,10 @@ class Pad(object):
         try:
             if len(self.file) < 1:
                 return ""
-            return str(cat(self.file.rstrip('/')))
+            return str(cat(self.file.rstrip("/")))
         except Exception as e:
             print(e)
         return ""  # new files
-
 
     # def set_menu(): # TODO - update the menu
     # def save_file(self):
@@ -32,16 +31,23 @@ class Pad(object):
                 div(_id=self.id, _style="width:300px; height:400px;").html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#"+self.id, _class="destroy"),  # TODO - reinit
+                            a(
+                                "close", _href="#" + self.id, _class="destroy"
+                            ),  # TODO - reinit
                             a("minimize", _href="deactivate", _class="minimize"),
-                            a("maximize", _href="#", _class="maximize")
+                            a("maximize", _href="#", _class="maximize"),
                         ),
                         h1("📝 Pad", _class="titleInside"),
-                        textarea(self.get_file_content(), _id=self.id,
-                                 _name=self.id, _style="width:100%;height:100%;")
+                        textarea(
+                            self.get_file_content(),
+                            _id=self.id,
+                            _name=self.id,
+                            _style="width:100%;height:100%;",
+                        ),
                     )
                 ),
-                script('''
+                script(
+                    """
                 $(".destroy").click(function(e) {
                     e.preventDefault();
                     $(this.hash).remove();
@@ -55,32 +61,52 @@ class Pad(object):
                     handles: "n, e, s, w, ne, se, sw, nw"
                 });
 
-                $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
+                $( "#"""
+                    + self.id
+                    + """" ).on( "dragstart", function( event, ui ) {
                     redraw_menu('pad')
                 } );
 
                 $(document).ready(function() {
-                    $("#'''+self.id+''' .window").css('z-index', a++);
+                    $("#"""
+                    + self.id
+                    + """ .window").css('z-index', a++);
                 });
 
-            ''')
+            """
+                ),
             )
         )
+
 
 # pad = Pad()
 
 pad_nav_menu = header(_id="head").html(
     nav(_id="menu").html(
         ul(
-            li(#_class="apple").html(
+            li(  # _class="apple").html(
                 a("🫐", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("About This Box", _href="#about-this-mac", **{"_data-rel":"show"})),
-                    li(a("Software Updates...", _href="https://github.com/byteface/Blueberry")),
-                    li(a("App Store...", _href="https://github.com/byteface/Blueberry")),
+                    li(
+                        a(
+                            "About This Box",
+                            _href="#about-this-mac",
+                            **{"_data-rel": "show"},
+                        )
+                    ),
+                    li(
+                        a(
+                            "Software Updates...",
+                            _href="https://github.com/byteface/Blueberry",
+                        )
+                    ),
+                    li(
+                        a("App Store...", _href="https://github.com/byteface/Blueberry")
+                    ),
                     li(_class="divider"),
                     li("System Preferences..."),
-                    li("Dock",
+                    li(
+                        "Dock",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Turn Hiding Off"),
@@ -90,11 +116,12 @@ pad_nav_menu = header(_id="head").html(
                             li("Position on Bottom"),
                             li("Position on Right"),
                             li(_class="divider"),
-                            li("Dock Preferences...")
-                        )
+                            li("Dock Preferences..."),
+                        ),
                     ),
                     li(_class="divider"),
-                    li("Recent Items",
+                    li(
+                        "Recent Items",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Applications", _class="disable"),
@@ -103,8 +130,8 @@ pad_nav_menu = header(_id="head").html(
                             li(_class="divider"),
                             li("Servers", _class="disable"),
                             li(_class="divider"),
-                            li("Clear Menu")
-                        )
+                            li("Clear Menu"),
+                        ),
                     ),
                     li(_class="divider"),
                     li("Force Quit..."),
@@ -113,14 +140,14 @@ pad_nav_menu = header(_id="head").html(
                     li("Restart..."),
                     li("Shut Down..."),
                     li(_class="divider"),
-                    li("Log Out...")
-                )
+                    li("Log Out..."),
+                ),
             ),
             # -- BEFORE THIS SHOULD STAY SAME
             li(_class="here").html(
                 a("Pad", _href="#all"),
                 ul(_class="sublist").html(
-                    li(a("About Pad", _href="#pad", **{"_data-rel":"show"})),
+                    li(a("About Pad", _href="#pad", **{"_data-rel": "show"})),
                     li(_class="divider"),
                     li("Preferences..."),
                     li(_class="divider"),
@@ -135,42 +162,50 @@ pad_nav_menu = header(_id="head").html(
                     li("Hide Pad"),
                     li("Hide Others"),
                     li("Show All", _class="disable"),
-                    li("Quit Pad")
-                )
+                    li("Quit Pad"),
+                ),
             ),
             li(
                 a("File", _href="#all"),
                 ul(_class="sublist").html(
                     # li(a("New Peruser Window", _href="#peruser", **{"_data-rel":"show"})),
-                    li(span("New",
-                        _onclick=escape(f"add_to_page('/component?file=newfile&id=pad_new')"))),  # todo randID and key from config
+                    li(
+                        span(
+                            "New",
+                            _onclick=escape(
+                                f"add_to_page('/component?file=newfile&id=pad_new')"
+                            ),
+                        )
+                    ),  # todo randID and key from config
                     li("Open"),
-                    li("Open Recent",
+                    li(
+                        "Open Recent",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Somedoc.txt"),
                             li("Another.txt"),
-                        )
+                        ),
                     ),
                     li("Close"),
                     li("Save"),
                     li("Duplicate"),
                     li("Rename"),
                     li("Move To"),
-                    li("Revert To",
+                    li(
+                        "Revert To",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Somedoc.txt"),
                             li("Another.txt"),
-                        )
+                        ),
                     ),
                     li("Export To PDF"),
                     li(_class="divider"),
                     li("Show Properties"),
                     li(_class="divider"),
                     li("Print"),
-                    li("Page Setup")
-                )
+                    li("Page Setup"),
+                ),
             ),
             li(
                 a("Edit", _href="#all"),
@@ -182,7 +217,8 @@ pad_nav_menu = header(_id="head").html(
                     li("Copy", _class="disable"),
                     li("Paste", _class="disable"),
                     li("Select All"),
-                    li("Find",
+                    li(
+                        "Find",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Find"),
@@ -190,29 +226,29 @@ pad_nav_menu = header(_id="head").html(
                             li("Find Next"),
                             li("Find Previous"),
                             li("Use Selection for Find"),
-                            li("Select Line")
-                        )
+                            li("Select Line"),
+                        ),
                     ),
-                    li("Spelling and Grammar", span(_class="arrow") ),
-                    li("Substitutions", span(_class="arrow") ),
-                    li("Transformations", 
+                    li("Spelling and Grammar", span(_class="arrow")),
+                    li("Substitutions", span(_class="arrow")),
+                    li(
+                        "Transformations",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
-                            li("Make Uppercase"),
-                            li("Make Lowercase"),
-                            li("Capitalise")
-                        )
+                            li("Make Uppercase"), li("Make Lowercase"), li("Capitalise")
+                        ),
                     ),
-                    li("Speech", span(_class="arrow") ),
+                    li("Speech", span(_class="arrow")),
                     li(_class="divider"),
-                    li('Start Dictation'),
-                    li("Emoji & Symbols")
-                )
+                    li("Start Dictation"),
+                    li("Emoji & Symbols"),
+                ),
             ),
             li(
                 a("Format", _href="#all"),
                 ul(_class="sublist").html(
-                    li("Font",
+                    li(
+                        "Font",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Show Fonts"),
@@ -225,11 +261,11 @@ pad_nav_menu = header(_id="head").html(
                             li("Bigger"),
                             li("Smaller"),
                             li(_class="divider"),
-                            li("Show Colors")
-
-                        )
+                            li("Show Colors"),
+                        ),
                     ),
-                    li("Text",
+                    li(
+                        "Text",
                         span(_class="arrow"),
                         ul(_class="sublist-menu").html(
                             li("Align Left"),
@@ -237,14 +273,15 @@ pad_nav_menu = header(_id="head").html(
                             li("Justify"),
                             li("Align Right"),
                             li(_class="divider"),
-                            li("Writing Direction",
+                            li(
+                                "Writing Direction",
                                 span(_class="arrow"),
                                 ul(_class="sublist-menu").html(
                                     li("Align Left"),
                                     li("Centre"),
                                     li("Justify"),
-                                    li("Align Right")
-                                )
+                                    li("Align Right"),
+                                ),
                             ),
                             li(_class="divider"),
                             li("Show Ruler"),
@@ -252,7 +289,7 @@ pad_nav_menu = header(_id="head").html(
                             li("Paste Ruler"),
                             li(_class="divider"),
                             li("Spacing"),
-                        )
+                        ),
                     ),
                     li(_class="divider"),
                     li("Make Plain Text"),
@@ -262,8 +299,8 @@ pad_nav_menu = header(_id="head").html(
                     li("Make Layout Vertical"),
                     li(_class="divider"),
                     li("List..."),
-                    li("Table...")
-                )    
+                    li("Table..."),
+                ),
             ),
             li(
                 a("View", _href="#all"),
@@ -275,8 +312,8 @@ pad_nav_menu = header(_id="head").html(
                     li("Zoom In"),
                     li("Zoom Out"),
                     li(_class="divider"),
-                    li("Go Fullscreen", _onclick="goFullScreen();")
-                ),    
+                    li("Go Fullscreen", _onclick="goFullScreen();"),
+                ),
             ),
             li(
                 a("Window", _href="#all"),
@@ -287,31 +324,31 @@ pad_nav_menu = header(_id="head").html(
                     li(_class="divider"),
                     li("Bring All to Front"),
                     li("Some Document"),
-                    li("Some Other Document")
-                )   
+                    li("Some Other Document"),
+                ),
             ),
             li(
                 a("Help", _href="#all"),
                 ul(_class="sublist").html(
                     li(input(_placeholder="Search")),
                     li("Pad Help"),
-                )
-            )
+                ),
+            ),
         )
     ),
     nav(_id="menu-dx").html(
         ul(
-            li('📶'),
+            li("📶"),
             li(_class="time").html(
                 ul(
                     li(_id="DateAbbr"),
                     li(_class="hour"),
                     li(":", _class="point"),
-                    li(_class="mins")
+                    li(_class="mins"),
                 )
             ),
-            li(a( whoami(), _href="#all"), _class="username"),
-            li("🔎")
+            li(a(whoami(), _href="#all"), _class="username"),
+            li("🔎"),
         )
-    )
+    ),
 )

@@ -8,14 +8,14 @@ from domonic.terminal import pwd, ls
 
 
 class ContextMenu(object):
-
     def __init__(self):
         pass
 
     def __str__(self):
         return str(
             div(
-        style('''
+                style(
+                    """
 
         .center {
           text-align: center;
@@ -72,29 +72,24 @@ class ContextMenu(object):
           }
         }
 
-        '''),
-
-        div(_class="menu").html(
-            ul(_class="menu-options").html(
-                li("New Folder", _class="menu-option"),
-                li("Get Info", _class="menu-option"),
-                li("Change Desktop Background", _class="menu-option")
-            )
-        ),
-
-
-        # div(_class="menu").html(
-        #     ul(_class="menu-options").html(
-        #         li("New Folder", _class="menu-option"),
-        #         li("Get Info", _class="menu-option"),
-        #         li("Change Desktop Background", _class="menu-option")
-        #     )
-        # ),
-
-
-
-
-        script('''
+        """
+                ),
+                div(_class="menu").html(
+                    ul(_class="menu-options").html(
+                        li("New Folder", _class="menu-option"),
+                        li("Get Info", _class="menu-option"),
+                        li("Change Desktop Background", _class="menu-option"),
+                    )
+                ),
+                # div(_class="menu").html(
+                #     ul(_class="menu-options").html(
+                #         li("New Folder", _class="menu-option"),
+                #         li("Get Info", _class="menu-option"),
+                #         li("Change Desktop Background", _class="menu-option")
+                #     )
+                # ),
+                script(
+                    """
 
         const menu = document.querySelector(".menu");
         const menuOption = document.querySelector(".menu-option");
@@ -129,10 +124,9 @@ class ContextMenu(object):
           return false;
         });
 
-        ''')
-
-
-        )  # close div
+        """
+                ),
+            )  # close div
         )  # close str
 
 
