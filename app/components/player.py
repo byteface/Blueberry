@@ -8,44 +8,38 @@ from domonic.javascript import Math
 class Player(object):
     def __init__(self, request=None):
         self.name = "player"
-        self.id = 'player'  # + str(Math.random()*9999)
+        self.id = "player"  # + str(Math.random()*9999)
         self.download()
 
-
     def download(self):
-      """ dl youtube videos """
+        """dl youtube videos"""
 
-      class MyLogger(object):
-          def debug(self, msg):
-              pass
+        class MyLogger(object):
+            def debug(self, msg):
+                pass
 
-          def warning(self, msg):
-              pass
+            def warning(self, msg):
+                pass
 
-          def error(self, msg):
-              print(msg)
+            def error(self, msg):
+                print(msg)
 
+        def my_hook(d):
+            if d["status"] == "finished":
+                print("Done downloading, now converting ...")
 
-      def my_hook(d):
-          if d['status'] == 'finished':
-              print('Done downloading, now converting ...')
-
-
-      # ydl_opts = {
-      #     'format': 'bestaudio/best',
-      #     'postprocessors': [{
-      #         'key': 'FFmpegExtractAudio',
-      #         'preferredcodec': 'mp3',
-      #         'preferredquality': '192',
-      #     }],
-      #     'logger': MyLogger(),
-      #     'progress_hooks': [my_hook],
-      # }
-      # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-      #     ydl.download(['https://www.youtube.com/watch?v=BaW_jenozKc'])
-
-
-
+        # ydl_opts = {
+        #     'format': 'bestaudio/best',
+        #     'postprocessors': [{
+        #         'key': 'FFmpegExtractAudio',
+        #         'preferredcodec': 'mp3',
+        #         'preferredquality': '192',
+        #     }],
+        #     'logger': MyLogger(),
+        #     'progress_hooks': [my_hook],
+        # }
+        # with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        #     ydl.download(['https://www.youtube.com/watch?v=BaW_jenozKc'])
 
     def __str__(self):
         return str(
@@ -53,13 +47,14 @@ class Player(object):
                 div(_id=self.id, _style="width:600px; height:400px;").html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#"+self.id,
-                              _class="destroy"),  # TODO - reinit
+                            a(
+                                "close", _href="#" + self.id, _class="destroy"
+                            ),  # TODO - reinit
                             a("minimize", _href="deactivate", _class="minimize"),
-                            a("maximize", _href="#", _class="maximize")
+                            a("maximize", _href="#", _class="maximize"),
                         ),
                         h1("📺 Player", _class="titleInside"),
-                        div(_id='content').html(
+                        div(_id="content").html(
                             h2("media player test."),
                             br(),
                             button("<< Prev", _id="prev_video"),
@@ -69,16 +64,17 @@ class Player(object):
                             h4("Download Video"),
                             label("Choose a format:", _for="downloads"),
                             select(_name="downloads", _id="downloads").html(
-                              option(".mp3", _value="mp3"),
-                              option("mov",_value="mov"),
-                              option("aiff",_value="aiff"),
-                              option("wav",_value="wav")
+                                option(".mp3", _value="mp3"),
+                                option("mov", _value="mov"),
+                                option("aiff", _value="aiff"),
+                                option("wav", _value="wav"),
                             ),
                             button("Start Download", _id="dl_video"),
-                        )
+                        ),
                     )
                 ),
-                script("""
+                script(
+                    """
 
                 const videos = [
                   "https://www.youtube.com/watch?v=jOD1qvsD9vs",
@@ -130,8 +126,10 @@ class Player(object):
 
                 }
                     
-                """),
-                script('''
+                """
+                ),
+                script(
+                    """
                 $(".destroy").click(function(e) {
                     e.preventDefault();
                     $(this.hash).remove();
@@ -139,12 +137,17 @@ class Player(object):
                 });
                 $('.content,.specific,.project,.share').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
                 $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
-                $( "#'''+self.id+'''" ).on( "dragstart", function( event, ui ) {
+                $( "#"""
+                    + self.id
+                    + """" ).on( "dragstart", function( event, ui ) {
                     redraw_menu('pad')
                 } );
                 $(document).ready(function() {
-                    $("#'''+self.id+''' .window").css('z-index', a++);
+                    $("#"""
+                    + self.id
+                    + """ .window").css('z-index', a++);
                 });
-                ''')
+                """
+                ),
             )
         )

@@ -9,7 +9,8 @@ from fastapi.staticfiles import StaticFiles
 from domonic.html import *
 from domonic.terminal import ls
 from app import *
-# from app.components import Pad, Peruser
+# from app.components.pad import Pad
+# from app.components.peruser import Peruser
 from app.components import *
 
 app = FastAPI()
@@ -34,7 +35,7 @@ async def dir(directory: str, id: str):
 # @app.get("/template", methods=["POST"])
 # def template():
 # TODO - need to write a 'decorator' that maps request params into a domonic components constructor
-# ideally it would DI the app context as well as the request. or will need to create template methods to pass refs through 
+# ideally it would DI the app context as well as the request. or will need to create template methods to pass refs through
 @app.get("/component")
 async def component(directory: str = None, id: str = None, file: str = None):
     try:  # TODO - fix these up rather than bodging thru now that its sorted further below...
@@ -49,7 +50,7 @@ async def component(directory: str = None, id: str = None, file: str = None):
 async def component2(component, request: Request = None):
     params = request.query_params
     try:
-        module = __import__(f'app.components.{component}')
+        module = __import__(f"app.components.{component}")
         my_class = getattr(module, component.title())
         return HTMLResponse(str(my_class(params)))
     except Exception as e:

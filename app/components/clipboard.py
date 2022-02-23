@@ -2,10 +2,11 @@ from domonic.html import *
 from domonic.javascript import Math
 from domonic.terminal import ifconfig
 
+
 class Clipboard(object):
     def __init__(self):
         self.name = "clipboard"
-        self.id = 'clipboard'
+        self.id = "clipboard"
 
     def __str__(self):
         return str(
@@ -13,20 +14,22 @@ class Clipboard(object):
                 div(_id=self.id, _style="width:300px; height:400px;").html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
-                            a("close", _href="#"+self.id,
-                              _class="destroy"),  # TODO - reinit
+                            a(
+                                "close", _href="#" + self.id, _class="destroy"
+                            ),  # TODO - reinit
                             a("minimize", _href="deactivate", _class="minimize"),
-                            a("maximize", _href="#", _class="maximize")
+                            a("maximize", _href="#", _class="maximize"),
                         ),
                         h1("📋 Clipboard", _class="titleInside"),
-                        div(_id='clipboard').html(
+                        div(_id="clipboard").html(
                             h2("test recordring users Clipboard data."),
                             # p('You can delete any items'),
-                            div(_id="clip")
-                        )
+                            div(_id="clip"),
+                        ),
                     )
                 ),
-                script("""
+                script(
+                    """
 
                     if (navigator.clipboard 
                          && navigator.clipboard.read 
@@ -52,6 +55,7 @@ class Clipboard(object):
                         setInterval( readClipboard, 3000 );
                     });
 
-                    """)
+                    """
+                ),
             )
         )
