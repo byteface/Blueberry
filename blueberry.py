@@ -1,73 +1,76 @@
 import os
-import configparser
-from sanic import Sanic
-from sanic import response
-# from werkzeug.utils import secure_filename
+import configparser  # TODO - switch to toml
+
+import uvicorn
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
 from domonic.html import *
 from domonic.terminal import ls
-
 from app import *
+# from app.components import Pad, Peruser
 from app.components import *
 
+app = FastAPI()
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-app = Sanic(name='Blueberry OS')
-app.static('/assets', './assets')
-app.static('/static', './static')
-
-app.config.UPLOAD_DIR = "uploads"
-
-# returns a specific component to be re-rendered
-@app.route('/file')
-async def file(request):
-    return response.html( str(Pad(request.args['file'][0], request.args['id'][0])) )
-
-# returns a specific component to be re-rendered
-@app.route('/dir')
-async def dir(request):
-    return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+# TODO - app.config.UPLOAD_DIR = "uploads"
 
 
-# @app.route("/template", methods=["POST"])
+@app.get('/file')
+async def file(file: str, id: str):
+    """returns a specific component to be re-rendered"""
+    return HTMLResponse(str(Pad(file, id)))
+
+
+@app.get('/dir')
+async def dir(directory: str, id: str):
+    """returns a specific component to be re-rendered"""
+    return HTMLResponse(str(Peruser(directory, id)))
+
+
+# @app.get("/template", methods=["POST"])
 # def template():
 # TODO - need to write a 'decorator' that maps request params into a domonic components constructor
 # ideally it would DI the app context as well as the request. or will need to create template methods to pass refs through 
-@app.route("/component")
-async def component(request):
+@app.get("/component")
+async def component(directory: str = None, id: str = None, file: str = None):
     try:  # TODO - fix these up rather than bodging thru now that its sorted further below...
-        return response.html( str(Peruser(request.args['directory'][0], request.args['id'][0])) )
+        return HTMLResponse(str(Peruser(directory, id)))
     except Exception as e:
         print(e)
-        return response.html( str(Pad(request.args['file'][0], request.args['id'][0])) )
+        return HTMLResponse(str(Pad(file, id)))
 
 
 # Component - takes a request as input and returns html
-@app.route("/component/<component>")
-async def component2(request, component):
+@app.get("/component/{component}/")
+async def component2(component, request: Request = None):
+    params = request.query_params
     try:
         module = __import__(f'app.components.{component}')
         my_class = getattr(module, component.title())
-        return response.html( str( my_class(request) ) )
+        return HTMLResponse(str(my_class(params)))
     except Exception as e:
         print(e)
-        return response.html( str( div("COMPONENT NOT FOUND!") ) )
+        return HTMLResponse(str(div("COMPONENT NOT FOUND!")))
 
 
-@app.route('/upload', methods=['POST'])
-async def upload(request):
-    if not os.path.exists(app.config.UPLOAD_DIR): os.makedirs(app.config.UPLOAD_DIR)
-    upload_file = request.files.get('file')
-    filename = upload_file.name
-    with open(app.config.UPLOAD_DIR+"/"+filename, "wb") as f:
-        # TODO - async with aiofiles.open(path, 'wb') as f: await f.write(body)
-        f.write(upload_file.body)
-        f.close()
-    return response.html( "done" )
+# @app.get('/upload', methods=['POST'])
+# async def upload(request):
+#     if not os.path.exists(app.config.UPLOAD_DIR): os.makedirs(app.config.UPLOAD_DIR)
+#     upload_file = request.files.get('file')
+#     filename = upload_file.name
+#     with open(app.config.UPLOAD_DIR+"/"+filename, "wb") as f:
+#         f.write(upload_file.body)
+#         f.close()
+#     return HTMLResponse( "done" )
 
-@app.route('/')
-async def test(request):
-    page = render(html('<!DOCTYPE HTML>', hd, bd, _lang="en-US", _class="no-js"))
-    return response.html( page )
+@app.get('/')
+async def test():
+    return HTMLResponse(str(html('<!DOCTYPE HTML>', hd, bd, _lang="en-US", _class="no-js")))
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

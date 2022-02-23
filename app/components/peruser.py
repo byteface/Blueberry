@@ -8,11 +8,11 @@ from html import escape
 
 class Peruser(object):
     '''
-    a file browser
+    Allows you to peruse the filesystem. aka : A file browser or 'Explorer' or 'Finder'
     '''
 
     PROJECT_ROOT = lambda _id : f"redraw('{_id}', '/dir?directory=.&id={_id}')"
-    
+
     UPLOADS_DIR = lambda _id : f"redraw('{_id}', '/dir?directory=./uploads&id={_id}')"
 
     def __init__(self, mydir='.', _id :str=None, is_root=True):

@@ -3,6 +3,7 @@ from domonic.terminal import pwd, ls, cat, whoami
 from domonic.javascript import Global
 from html import escape
 
+
 class Pad(object):
 
     def __init__(self, myfile='', _id: str = None, *args, **kwargs):

@@ -2,13 +2,13 @@ from domonic.html import *
 from domonic.terminal import whoami
 from html import escape
 
+
 class Nav_Menu(object):
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, request=None, *args, **kwargs):
         self.id = "menu"
         self.menu = nav_menu
-        # print(request.args['nav'])
         try:
-            if request.args['nav'][0] == 'pad':
+            if request.get('nav') == 'pad':
                 from app.components.pad import pad_nav_menu
                 self.menu = pad_nav_menu
         except Exception as e:

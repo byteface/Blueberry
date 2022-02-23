@@ -1,3 +1,4 @@
-domonic==0.2.11
-sanic==20.6.3
+domonic==0.9.4
+fastapi==0.74.1
+uvicorn==0.17.5
 youtube-dl==2020.7.28
