@@ -1,4 +1,6 @@
-domonic==0.9.4
-fastapi==0.74.1
-uvicorn==0.17.5
-youtube-dl==2021.12.17
+domonic==0.9.12
+fastapi==0.110.3
+uvicorn==0.29.0
+#youtube-dl==2021.12.17
+black
+isort

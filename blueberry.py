@@ -1,13 +1,13 @@
+import configparser  # TODO - switch to toml
 import os
-import configparser  # TODO - switch to toml
 
 import uvicorn
+from domonic.html import *
+from domonic.terminal import ls
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
-from domonic.html import *
-from domonic.terminal import ls
 from app import *
 # from app.components.pad import Pad
 # from app.components.peruser import Peruser
@@ -20,13 +20,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # TODO - app.config.UPLOAD_DIR = "uploads"
 
 
-@app.get('/file')
+@app.get("/file")
 async def file(file: str, id: str):
     """returns a specific component to be re-rendered"""
     return HTMLResponse(str(Pad(file, id)))
 
 
-@app.get('/dir')
+@app.get("/dir")
 async def dir(directory: str, id: str):
     """returns a specific component to be re-rendered"""
     return HTMLResponse(str(Peruser(directory, id)))
@@ -50,6 +50,7 @@ async def component(directory: str = None, id: str = None, file: str = None):
 async def component2(component, request: Request = None):
     params = request.query_params
     try:
+        # print(f"app.components.{component}")
         module = __import__(f"app.components.{component}")
         my_class = getattr(module, component.title())
         return HTMLResponse(str(my_class(params)))
@@ -68,10 +69,14 @@ async def component2(component, request: Request = None):
 #         f.close()
 #     return HTMLResponse( "done" )
 
-@app.get('/')
+
+@app.get("/")
 async def test():
-    return HTMLResponse(str(html('<!DOCTYPE HTML>', hd, bd, _lang="en-US", _class="no-js")))
+    return HTMLResponse(
+        str(html("<!DOCTYPE HTML>", hd, bd, _lang="en-US", _class="no-js"))
+    )
 
 
-if __name__ == '__main__':
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+if __name__ == "__main__":
+    # uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

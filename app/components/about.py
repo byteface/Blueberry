@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 from domonic.html import *
 from domonic.javascript import Math
@@ -19,21 +20,20 @@ class About(Window):
         memory = None
         if sys.platform == "win32":
             from domonic.cmd import Cmdcommand
-
             memory = Cmdcommand.run("wmic OS get FreePhysicalMemory /Value")
         else:
-            from domonic.terminal import command
-
-            memory = command.run("top -l 1 -s 0 | grep PhysMem")
+            try:
+                from domonic.terminal import command
+                memory = command.run("top -l 1 -s 0 | grep PhysMem")
+            except subprocess.CalledProcessError:
+                memory = ""
 
         disk = None
         if sys.platform == "win32":
             from domonic.cmd import Cmdcommand
-
             disk = Cmdcommand.run("wmic diskdrive get size")
         else:
             from domonic.terminal import command
-
             disk = command.run("df -h")
 
         self.content = div(_class="container").html(
@@ -65,7 +65,7 @@ class About(Window):
                     ),
                     br(),
                     div(_class="copyright").html(
-                        p("© 2020 Blueberry"), sup("All Rights Reserved")
+                        p("© 2024 Blueberry"), sup("All Rights Reserved")
                     ),
                 ),
             )

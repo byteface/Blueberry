@@ -2,24 +2,33 @@ from domonic.html import *
 from domonic.terminal import pwd, ls, cat
 from domonic.javascript import Global
 
+from starlette.datastructures import QueryParams
 
 class Markdown(object):
     def __init__(self, myfile="", _id: str = None):
-        self.file = myfile
-        if _id is None:
-            self.id = "md" + str(hash(self.file))
+
+       # If myfile is not a string, assume it's a QueryParams object
+        if isinstance(myfile, QueryParams):
+            self.file = myfile.get('file', "")
+            self.id = myfile.get('_id', None)
+            if self.id is None:
+                self.id = "md" + str(hash(self.file))
+
         else:
-            self.id = _id
+            if _id is None:
+                self.id = "md" + str(hash(self.file))
+            else:
+                self.id = _id
 
     def get_file_content(self):
         if len(self.file) < 1:
             return ""
-        return str(cat(self.file.rstrip("/")))
+        output = str(cat(self.file.rstrip("/")))
+        return output
 
     def __str__(self):
         return str(
             div(
-                script(_src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"),
                 div(_id=self.id).html(
                     div(_id="share", _class="window share").html(
                         nav(_class="control-window").html(
@@ -28,30 +37,54 @@ class Markdown(object):
                             a("maximize", _href="#", _class="maximize"),
                         ),
                         h1("Markdown Viewer", _class="titleInside"),
-                        # div(_id=self.id, _name=self.id)
-                        iframe(
+                        div(
                             _id="FileFrame",
-                            _src="about:blank",
                             _style="width:100%;height:100%;",
                         ),
+
                     )
                 ),
-                # script(f'document.getElementById("{self.id}").innerHTML = marked(decodeURIComponent("{Global.encodeURIComponent(self.get_file_content())}"));')
                 script(_type="text/javascript").html(
-                    f'var doc = document.getElementById("FileFrame").contentWindow.document;\
-                   doc.open();\
-                   var result = marked(decodeURIComponent( "{Global.encodeURIComponent(self.get_file_content())}" ));\
-                   doc.write( result );\
-                   doc.close();\
-                   ',
+                    f"""
+                    var script = document.createElement('script');
+                    script.src = 'assets/js/marked.min.js';
+                    script.onload = function() {{
+                        window.console.log('marked::', marked);
+                        var doc = document.getElementById('FileFrame');
+                        var result = marked.parse(decodeURIComponent("{Global.encodeURIComponent(self.get_file_content())}"));
+                        doc.innerHTML = result;
+                    }};
+                    document.head.appendChild(script);
+                    """,
                     """
-                $(".destroy").click(function(e) {
-                    e.preventDefault();
-                    $(this.hash).remove();
-                    redraw_menu('peruser')
-                });
-                """,
-                ),
+                    $(".destroy").click(function(e) {
+                        e.preventDefault();
+                        $(this.hash).remove();
+                        redraw_menu('peruser');
+                    });
+
+                    $('.content,.specific,.project,.share,.peruser').draggable({ handle: '.title-inside', start: function(event, ui) { $(this).css("z-index", a++); }});
+                    $(".window").draggable({ handle: '.titleInside, .title-mac, .tab, #toolbar, #view', refreshPositions: true, start: function(event, ui) { $(this).css("z-index", a++); } });
+                    
+                    $(".window").resizable({
+                        handles: "n, e, s, w, ne, se, sw, nw"
+                    });
+
+                    $( "#"""
+                        + self.id
+                        + """" ).on( "dragstart", function( event, ui ) {
+                        redraw_menu('pad')
+                    } );
+
+                    $(document).ready(function() {
+                        $("#"""
+                        + self.id
+                        + """ .window").css('z-index', a++);
+                    });
+
+                    """
+                )
+
             )
         )
 

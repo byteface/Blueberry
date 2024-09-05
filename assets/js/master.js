@@ -86,6 +86,52 @@ setInterval( function() {
 //	2.	Fix Classes after Validate Login
 //-----------------------------------------------------------------------------------
 
+
+// Function to get the value of a cookie by name
+function getCookie(name) {
+	let cookieArr = document.cookie.split(";");
+	for (let i = 0; i < cookieArr.length; i++) {
+		let cookiePair = cookieArr[i].split("=");
+		if (name === cookiePair[0].trim()) {
+			return decodeURIComponent(cookiePair[1]);
+		}
+	}
+	return null;
+}
+
+// Function to set a cookie
+function setCookie(name, value, days) {
+	let expires = "";
+	if (days) {
+		let date = new Date();
+		date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		expires = "; expires=" + date.toUTCString();
+	}
+	document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+}
+
+// Check if the password cookie exists and auto-login if correct
+let savedPassword = getCookie("password");
+if (savedPassword === "admin") {
+	// Password is correct, proceed directly to login
+	$('input[type=password]').addClass('valid');
+	$('.tooltip-pass').hide();
+	$('.submit').removeClass('submit').addClass('charge');
+	$('#pageLogin').addClass('initLog').queue(function() { 
+		$(this).removeClass('initLog').addClass('initLogExit'); 
+		$(this).dequeue(); 
+	});
+	$('#page, #head').queue(function() { 
+		$(this).addClass('vis'); 
+		$(this).dequeue(); 
+	});
+	$('.window').queue(function() { 
+		$(this).addClass('windows-vis'); 
+		$(this).dequeue(); 
+	});
+}
+
+
 $('.submit').click(function() {
 	var ValPassword = $('#password').val() === 'admin';
     if (ValPassword === true) {
@@ -96,6 +142,10 @@ $('.submit').click(function() {
 		$('#page, #head').delay(2500).queue(function() { $(this).addClass('vis'); $(this).dequeue(); });
 		$('.window').delay(3000).queue(function() { $(this).addClass('windows-vis'); $(this).dequeue(); });
 		event.preventDefault();
+
+		// Save password in cookie for future logins
+		setCookie("password", "admin", 7);  // Cookie expires in 7 days
+
     }
     else {
 		$('.tooltip-pass').hide();

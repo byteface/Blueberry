@@ -19,7 +19,7 @@ hd = head(
         _rel="stylesheet",
         _type="text/css",
         _media="screen",
-        _href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css",
+        _href="assets/css/jquery-ui.css",
     ),
     title("BlueBerry OS"),
     meta(
@@ -27,7 +27,7 @@ hd = head(
         _content="BlueBerry OS - API based OS access built with web technologies",
     ),
     script(_type="text/javascript", _src="assets/js/modernizr.js"),
-    script(_type="text/javascript", _src="assets/js/jquery-3.5.1.min.js"),
+    script(_type="text/javascript", _src="assets/js/jquery-3.6.0.min.js"),
     script(_type="text/javascript", _src="assets/js/jquery-ui.min.js"),
     script(_type="text/javascript", _src="assets/js/master.js"),
 )

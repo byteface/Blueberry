@@ -7,7 +7,7 @@ from domonic.terminal import pwd, whoami
 
 from .components.context_menu import *
 from .components.pad import *
-from .components.md import *
+from .components.markdown import *
 from .components.dock import *
 from .components.head import *
 from .components.desktop import *
@@ -25,7 +25,7 @@ from .components.core import *
 # to customise update the config.ini file
 config = configparser.ConfigParser()
 config.read("config.ini")
-profile = "default"
+profile = "me"
 
 app_settings = {}
 app_settings["DESKTOP"] = config.get(profile, "DESKTOP", fallback=".")

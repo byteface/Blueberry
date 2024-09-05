@@ -24,7 +24,7 @@ class Peruser(object):
         if ">" in mydir:
             mydir = "."
         try:
-            print(command.run("pwd"))
+            # print(command.run("pwd"))
             from pathlib import Path
 
             path = str(Path(mydir).expanduser().resolve())
@@ -104,7 +104,7 @@ class Peruser(object):
         xpos = 40 + (self.col * 100)
         ypos = 60 + (self.row * 100)
 
-        print(name, xpos, ypos, self.col, self.row)
+        # print(name, xpos, ypos, self.col, self.row)
         s = f"left:{xpos}px;top:{ypos}px;"
 
         el = div(
@@ -119,9 +119,7 @@ class Peruser(object):
         return el
 
     def create_file(self, name: str):
-
         pwd = os.getcwd()
-
         filepath = pwd.strip("\n") + "/" + self.dir.rstrip("/") + "/" + name
 
         # draw a file
@@ -132,7 +130,12 @@ class Peruser(object):
             filetype = ""  # filetype only used to decorate icon
 
         filepath = self.dir.rstrip("/") + "/" + name
-        uid = "pad" + str(Math.round(Math.random() * 99999))
+        if filetype == 'md':
+            uid = "markdown" + str(Math.round(Math.random() * 99999))
+            component_url = f"/component/markdown?file={filepath}&id={uid}"
+        else:
+            uid = "pad" + str(Math.round(Math.random() * 99999))
+            component_url = f"/component?file={filepath}&id={uid}"
 
         # s = f'top:{Math.random()*100}px;left:{Math.random()*100}px;' # TODO - spread better than rand
 
@@ -140,7 +143,7 @@ class Peruser(object):
         ypos = 60 + (self.row * 100)
         s = f"left:{xpos}px;top:{ypos}px;"
 
-        print(name, xpos, ypos, self.col, self.row)
+        # print(name, xpos, ypos, self.col, self.row)
 
         el = str(
             div(
@@ -148,7 +151,7 @@ class Peruser(object):
                 _style=s,
                 # TODO - NOTE - this is what 'create_ref' should try to resolve and y a component lib would be useful.
                 # _onclick=escape(f'add_to_page("/component?file={filepath}&id={uid}")')
-                **{"_data-path": f"/component?file={filepath}&id={uid}"},
+                **{"_data-path": component_url},
                 **{"_data-id": uid},
             ).html(
                 div(_class="file-icon").html(
@@ -163,37 +166,36 @@ class Peruser(object):
         )
 
         try:
-            # print('NAME:', name)
             images = ["jpg", "jpeg", "png", "gif"]
             for image in images:
                 if image in name:
-                    print(
-                        "IMAGE detected!"
-                    )  # TODO - only take a render if its smaller than X
+                    # print(
+                    #     "IMAGE detected!"
+                    # )  # TODO - only take a render if its smaller than X
 
                     # imgpath = "file:///" + str(pwd()).strip('\n') + '/' + self.dir.rstrip('/') + '/' + name
                     # el = img(_src=imgpath, _style="width:50px;height:50px;")
 
                     imgpath = (
-                        str(pwd()).strip("\n") + "/" + self.dir.rstrip("/") + "/" + name
+                        pwd.strip("\n") + "/" + self.dir.rstrip("/") + "/" + name
                     )
+
                     with open(imgpath, "rb") as img_file:
                         src = base64.b64encode(img_file.read()).decode("utf-8")
 
                     el = img(
                         _src="data:image/png;base64," + src,
-                        _style="width:50px;height:50px;",
+                        _style="width:50px;height:50px;position:absolute;top:200px",
                         _class="imagefile",
                         **{"_data-target": "_blank"},
                         **{"_data-href": "data:image/png;base64, " + src},
                     )
-
                     break
 
         except Exception as e:
             print("create file FAILED:", e)
 
-        print(el)
+        # print(el)
         return el
 
     def create_list_view(self) -> str:
