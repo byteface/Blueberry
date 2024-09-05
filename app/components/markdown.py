@@ -1,8 +1,8 @@
 from domonic.html import *
-from domonic.terminal import pwd, ls, cat
 from domonic.javascript import Global
-
+from domonic.terminal import cat, ls, pwd
 from starlette.datastructures import QueryParams
+
 
 class Markdown(object):
     def __init__(self, myfile="", _id: str = None):

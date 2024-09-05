@@ -36,7 +36,7 @@ python3 blueberry.py
 
 edit the congi.ini and comment out the things you don't want to appear in the Dock
 
-not all settings working yet
+*not all settings working yet
 
 ## nav
 
@@ -45,10 +45,5 @@ To see how components are rendered see the nav...
 - <http://localhost:8000/component/nav_menu?nav=default>
 - <http://localhost:8000/component/nav_menu?nav=pad>
 
-## demo
-
-It's been sat on this droplet for about a year...
-
-[http://206.189.123.215:8000/](http://206.189.123.215:8000/)
 
 <img src="https://github.com/byteface/Blueberry/blob/master/assets/img/fullscreen.png" alt="screenshot">

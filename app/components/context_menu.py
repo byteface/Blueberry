@@ -4,7 +4,7 @@ import base64
 
 # from domonic.javascript import Math
 from domonic.html import *
-from domonic.terminal import pwd, ls
+from domonic.terminal import ls, pwd
 
 
 class ContextMenu(object):

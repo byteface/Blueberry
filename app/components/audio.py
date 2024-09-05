@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
-import youtube_dl
 
+import youtube_dl
 from domonic.html import *
 from domonic.javascript import Math
 

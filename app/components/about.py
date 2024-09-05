@@ -1,10 +1,10 @@
 import os
-import sys
 import subprocess
+import sys
 
+from domonic.components import SpriteCSS
 from domonic.html import *
 from domonic.javascript import Math
-from domonic.components import SpriteCSS
 
 from .core import Window
 

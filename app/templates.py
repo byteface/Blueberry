@@ -5,22 +5,21 @@ import configparser
 from domonic.html import *
 from domonic.terminal import pwd, whoami
 
+from .components.about import *
+from .components.audio import *
 from .components.context_menu import *
-from .components.pad import *
-from .components.markdown import *
+from .components.core import *
+from .components.desktop import *
 from .components.dock import *
 from .components.head import *
-from .components.desktop import *
-from .components.peruser import *
-from .components.nav_menu import *
-from .components.upload import *
 from .components.launcher import *
-
+from .components.markdown import *
+from .components.nav_menu import *
+from .components.pad import *
+from .components.peruser import *
 # from .components.clipboard import *
 from .components.player import *
-from .components.audio import *
-from .components.about import *
-from .components.core import *
+from .components.upload import *
 
 # to customise update the config.ini file
 config = configparser.ConfigParser()

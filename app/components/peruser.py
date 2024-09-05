@@ -1,10 +1,10 @@
 import base64
-
-from domonic.html import *
-from domonic.terminal import *
-from domonic.cmd import dir
-from domonic.javascript import *
 from html import escape
+
+from domonic.cmd import dir
+from domonic.html import *
+from domonic.javascript import *
+from domonic.terminal import *
 
 
 class Peruser(object):

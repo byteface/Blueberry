@@ -2,6 +2,7 @@ from domonic.html import *
 from domonic.javascript import Math
 from domonic.terminal import ifconfig
 
+
 # TODO - class decorate the window rather than pasting each time
 class Upload(object):
     """

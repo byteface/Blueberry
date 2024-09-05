@@ -1,6 +1,7 @@
+from html import escape
+
 from domonic.html import *
 from domonic.terminal import whoami
-from html import escape
 
 
 class Nav_Menu(object):

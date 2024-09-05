@@ -1,7 +1,8 @@
-from domonic.html import *
-from domonic.terminal import pwd, ls, cat, whoami
-from domonic.javascript import Global
 from html import escape
+
+from domonic.html import *
+from domonic.javascript import Global
+from domonic.terminal import cat, ls, pwd, whoami
 
 
 class Pad(object):

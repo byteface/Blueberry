@@ -1,8 +1,8 @@
-from domonic.html import *
-from domonic.javascript import Math
-from domonic.javascript import Global
-from domonic.terminal import ifconfig
 from html import escape
+
+from domonic.html import *
+from domonic.javascript import Global, Math
+from domonic.terminal import ifconfig
 
 
 class Launcher(object):

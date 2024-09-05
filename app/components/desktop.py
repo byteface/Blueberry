@@ -1,10 +1,10 @@
 import os
 import sys
 
-from domonic.html import *
-from domonic.terminal import *
 from domonic.cmd import dir
+from domonic.html import *
 from domonic.javascript import Math
+from domonic.terminal import *
 
 
 class Desktop(object):
