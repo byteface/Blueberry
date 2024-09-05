@@ -18,7 +18,7 @@ app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # TODO - app.config.UPLOAD_DIR = "uploads"
-
+__version__ = "2024.09.05"
 
 @app.get("/file")
 async def file(file: str, id: str):
