@@ -1,6 +1,6 @@
 domonic==0.9.12
-fastapi==0.110.3
-uvicorn==0.29.0
+fastapi==0.112.2
+uvicorn==0.30.6
 #youtube-dl==2021.12.17
 black
 isort
